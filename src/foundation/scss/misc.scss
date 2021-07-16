@@ -1,0 +1,22 @@
+
+.port-svg-background-container {
+    position: absolute;
+    z-index: 5;
+    height: 100%;
+    width: 100%;
+
+    &--header-variant-left {
+        top: -79px;
+        left: -54px;
+    }
+
+    &--header-variant-right {
+        left: -105px;
+        top: -93px;
+    }
+
+    &--contact-variant {
+        left: -47px;
+        top: -86px;
+    }
+}

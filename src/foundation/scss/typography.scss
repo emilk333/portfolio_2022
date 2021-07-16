@@ -1,0 +1,40 @@
+
+.router-link-active {
+    color: $base-dark-color!important;
+}
+
+.port-nav-link {
+    font-family: 'AirbnbCerealBold', Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+    
+    a {
+        color: $dark-blue-opaque;
+        text-decoration: underline 0.2rem rgba($base-dark-color, 0);
+        transition: text-decoration-color 300ms;
+    }
+
+    &:hover {
+        a {
+            text-decoration-color: $base-dark-color;
+        }
+    }
+}
+
+.port-small-book {
+    font-size: 1.1rem;
+    font-family: 'AirbnbCerealBook', Arial, Helvetica, sans-serif;
+    color: $base-dark-color;
+    opacity: 0.5;
+}
+
+.port-medium-medium {
+    font-size: 1.4rem;
+    font-family: 'AirbnbCerealMedium', Arial, Helvetica, sans-serif;
+    color: $base-dark-color;
+}
+
+.port-large-medium {
+    font-size: 1.8rem;
+    font-family: 'AirbnbCerealMedium', Arial, Helvetica, sans-serif;
+    color: $base-dark-color;
+}
