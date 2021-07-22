@@ -1,3 +1,4 @@
+@import '../../foundation/scss/variables.scss';
 
 .router-link-active {
     color: $base-dark-color!important;
@@ -20,11 +21,35 @@
     }
 }
 
+
+
+//SMALL 
 .port-small-book {
     font-size: 1.1rem;
     font-family: 'AirbnbCerealBook', Arial, Helvetica, sans-serif;
     color: $base-dark-color;
     opacity: 0.5;
+}
+
+
+//MEDIUM
+.port-medium-book {
+    font-size: 1.3rem;
+    font-family: 'AirbnbCerealBook', Arial, Helvetica, sans-serif;
+    color: $base-dark-color;
+    opacity: 0.7;
+    line-height: 1.7rem;
+
+    &--wide {
+        font-size: 1.4rem;
+        opacity: 1;
+        padding-left: 2rem;
+    }
+
+    &--opaque {
+        font-size: 1.3rem;
+        opacity: 0.5;
+    }
 }
 
 .port-medium-medium {
@@ -36,5 +61,40 @@
 .port-large-medium {
     font-size: 1.8rem;
     font-family: 'AirbnbCerealMedium', Arial, Helvetica, sans-serif;
+    color: $base-dark-color;
+}
+
+
+// BOLD
+.port-extra-small-bold {
+    font-size: 1.1rem;
+    font-family: 'AirbnbCerealBold', Arial, Helvetica, sans-serif;
+    color: $base-dark-color;
+    text-transform: uppercase;
+}
+
+.port-small-bold {
+    font-size: 1.4rem;
+    font-family: 'AirbnbCerealBold', Arial, Helvetica, sans-serif;
+    color: $base-dark-color;
+}
+
+.port-medium-bold {
+    font-size: 1.6rem;
+    font-family: 'AirbnbCerealBold', Arial, Helvetica, sans-serif;
+    color: $base-dark-color;
+}
+
+.port-large-bold {
+    font-size: 3rem;
+    font-family: 'AirbnbCerealBold', Arial, Helvetica, sans-serif;
+    color: $base-dark-color;
+}
+
+
+// EXTRA BOLD
+.port-medium-extra-bold {
+    font-size: 2.4rem;
+    font-family: 'AirbnbCerealExtraBold', Arial, Helvetica, sans-serif;
     color: $base-dark-color;
 }

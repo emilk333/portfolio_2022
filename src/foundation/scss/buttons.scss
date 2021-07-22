@@ -1,0 +1,36 @@
+
+.port-button {
+    text-decoration: none;
+    padding: 1.4rem 4rem;
+    border-radius: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 3rem;
+    background-color: none;
+    border-color: none;
+    cursor: pointer;
+
+    svg {
+        width: 2rem;
+        height: auto;
+    }
+
+    &--behance-link {
+        margin: 1rem 0; 
+        background-color: $blood-orange;
+    }
+
+    &--github-link {
+        background-color: $base-color;
+    }
+
+    &--collapse {
+        background-color: transparent;
+        border: none;
+        display: flex;
+        flex-direction: column;
+        padding-top: 3rem;
+        margin: 0 auto;
+    }
+}
