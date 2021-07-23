@@ -33,4 +33,26 @@
         padding-top: 3rem;
         margin: 0 auto;
     }
+
+    &--project-link {
+        z-index: 6666;
+
+        &:before {
+            z-index: 5555;
+            opacity: 0;
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            background-color: green;
+            border-radius: 2.5rem;
+            height: 4.5rem;
+            width: 11rem;
+        }
+        &:hover {
+            &:before {
+                opacity: 1;
+            }
+        }
+    }
 }

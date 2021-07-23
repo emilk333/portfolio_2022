@@ -2,10 +2,19 @@
 
 
 <script lang="ts">
-    import { defineComponent } from 'vue';
+    import { defineComponent, onMounted, ref } from 'vue';
 
     export default defineComponent({
         name: 'TheHeader',
+        setup() {
+
+            onMounted(() => {
+                const areaToHover = ref((document.querySelector('.js-port-mouse-hover-effect') as HTMLElement) ?? "")
+                document.body.onmousemove = function(e) {
+                    areaToHover.value.style.setProperty('background-position',(e.clientX - 27)+'px '+(e.clientY - 23)+'px');
+                }
+            }) 
+        }
 });
 </script>
 
@@ -25,7 +34,7 @@
                 </div>
                 <div class="port-svg-background-container port-svg-background-container--header-variant-left">
                     <svg xmlns="http://www.w3.org/2000/svg" width="131.452" height="168.988" viewBox="0 0 131.452 168.988">
-                        <g id="_26432" data-name="26432" transform="translate(-167.421 376.409)" opacity="0.029">
+                        <g id="_26432" data-name="26432" transform="translate(-167.421 376.409)" opacity="0.05">
                             <path id="Path_9" data-name="Path 9" d="M241.7-366.074a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,241.7-366.074Z" transform="translate(-30 -10)" fill="#212e45"/>
                             <path id="Path_57" data-name="Path 57" d="M241.7-366.074a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,241.7-366.074Z" transform="translate(-67.591 -10)" fill="#212e45"/>
                             <path id="Path_10" data-name="Path 10" d="M279.291-366.074a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,279.291-366.074Z" transform="translate(-30 -10)" fill="#212e45"/>
@@ -47,10 +56,10 @@
             </section>
 
             <section class="port-header__middle-section">
-                <ul class="port-header__nav">
+                <ul class="port-header__nav js-port-mouse-hover-effect">
                     <li class="port-header__nav-item port-nav-link">
                         <router-link to="/projects">
-                            Projects
+                            Work
                         </router-link>
                     </li>
                     <li class="port-header__nav-item port-nav-link">
@@ -78,7 +87,7 @@
                 </div>
                 <div class="port-svg-background-container port-svg-background-container--header-variant-right">
                     <svg xmlns="http://www.w3.org/2000/svg" width="131.452" height="168.988" viewBox="0 0 131.452 168.988">
-                        <g id="_26432" data-name="26432" transform="translate(-167.421 376.409)" opacity="0.029">
+                        <g id="_26432" data-name="26432" transform="translate(-167.421 376.409)" opacity="0.05">
                             <path id="Path_9" data-name="Path 9" d="M241.7-366.074a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,241.7-366.074Z" transform="translate(-30 -10)" fill="#212e45"/>
                             <path id="Path_57" data-name="Path 57" d="M241.7-366.074a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,241.7-366.074Z" transform="translate(-67.591 -10)" fill="#212e45"/>
                             <path id="Path_10" data-name="Path 10" d="M279.291-366.074a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,279.291-366.074Z" transform="translate(-30 -10)" fill="#212e45"/>
@@ -120,10 +129,39 @@
 
         &__nav {
             display: flex;
+            background-size:0 0; 
+            align-items: center;
+            cursor: none;
+
+            a {
+                cursor: none;
+            }
+
+            &:before {
+                opacity: 0.6;
+                z-index: 8888;
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background:
+                    radial-gradient(farthest-side, 
+                    $base-light-grey-dots calc(100% - 1px),
+                    transparent 100%) 
+                    fixed /* Fixed to the screen*/ 
+                    no-repeat; 
+                background-size: 60px 60px;
+                background-position: inherit;
+            }
         }
 
         &__nav-item {
             margin: 0 4rem;
+            z-index: 9999;
+            position: relative;
+            padding: 2rem 0;
         }
         
         &__container {
@@ -133,6 +171,7 @@
             align-items: center;
             position: relative;
             padding: 0 4rem;
+            height: 100%;
         }
 
         &__left-section, &__right-section {
@@ -146,8 +185,13 @@
 
         &__middle-section {
             position: absolute;
-            left: 50%;
-            transform: translate(-50%);
+            left:0;
+            right:0;
+            width: 410px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100%;
+            display: flex;
         }
 
         &__right-section {
