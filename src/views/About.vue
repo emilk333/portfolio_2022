@@ -2,7 +2,8 @@
 
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref, computed } from 'vue'
+import { useStore } from 'vuex'
 import ToolsAndSkills from '../components/ToolsAndSkills/ToolsAndSkills.vue'
 
 export default defineComponent({
@@ -11,24 +12,84 @@ export default defineComponent({
 		ToolsAndSkills
 	},
 	setup() {
+		const store = useStore()
 
-		const technologyTools = ref([
-			"Html",
-			"Sass",
-			"Javascript",
-			"React",
-			"Vue"
+		const toolsData = ref([
+			{
+				name : "Html",
+				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
+				tooltipStrength : "Master",
+				tooltipStrengthLevel : 1,
+				tooltipShown : false,
+				type : "tech"
+			},
+			{
+				name : "Sass",
+				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
+				tooltipStrength : "Pretty good",
+				tooltipStrengthLevel : 2,
+				tooltipShown : false,
+				type : "tech"
+			},
+			{
+				name : "Javascript",
+				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
+				tooltipStrength : "Master",
+				tooltipStrengthLevel : 3,
+				tooltipShown : false,
+				type : "tech"
+			},
+			{
+				name : "React",
+				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
+				tooltipStrength : "Master",
+				tooltipStrengthLevel : 1,
+				tooltipShown : false,
+				type : "tech"
+			},
+			{
+				name : "Vue",
+				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
+				tooltipStrength : "Master",
+				tooltipStrengthLevel : 1,
+				tooltipShown : false
+			},
+			{
+				name : "AdobeXD",
+				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
+				tooltipStrength : "Master",
+				tooltipStrengthLevel : 1,
+				tooltipShown : false,
+				type : "design"
+			},
+			{
+				name : "Photoshop",
+				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
+				tooltipStrength : "Master",
+				tooltipStrengthLevel : 1,
+				tooltipShown : false,
+				type : "design"
+			},
+			{
+				name : "Zeplin",
+				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
+				tooltipStrength : "Master",
+				tooltipStrengthLevel : 1,
+				tooltipShown : false,
+				type : "design"
+			}
 		])
 
-		const designTools = ref([
-			"AdobeXD",
-			"Photoshop",
-			"Zeplin",
-		])
+		onMounted(() => {
+			store.dispatch('setToolsDataInStore', toolsData)
+		}) 
+
+		const toolsDataFromStore = computed(() => {
+			return store.state.tools_data
+		})
 
 		return {
-			technologyTools,
-			designTools
+			toolsDataFromStore
 		}
 	}
 })
@@ -90,19 +151,19 @@ export default defineComponent({
 					</div>
 					<div class="port-about__text-container-top-margin">
 						<h3 class="port-small-bold">Design tools</h3>
-						<template v-for="designTool in designTools" :key="designTool">
-							<ToolsAndSkills :nameValue="designTool"/>
+						<template v-for="tool in toolsDataFromStore" :key="tool">
+							<ToolsAndSkills :data="tool"/>
 						</template>
 					</div>
 				</div>
-				<div>
+				<!-- <div>
 					<div>
 						<h3 class="port-small-bold">Familiar technology</h3>
-						<template v-for="technology in technologyTools" :key="technology">
-							<ToolsAndSkills :nameValue="technology"/>
+						<template v-for="technology in technologyDataFromStore" :key="technology">
+							<ToolsAndSkills :data="technology"/>
 						</template>
 					</div>
-				</div>
+				</div> -->
 			</section>
 
 		</article>

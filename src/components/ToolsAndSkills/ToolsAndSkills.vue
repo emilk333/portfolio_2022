@@ -2,17 +2,36 @@
 
 
 <script lang="ts">
-    import { defineComponent, ref } from 'vue'
+    import { defineComponent, ref, computed } from 'vue'
+    import { useStore } from 'vuex'
+    import Tooltip from '../TooltipComponent/TooltipComponent.vue'
 
+    interface ItooltipConfig {
+        tooltipActiveState : boolean,
+        title : string,
+        text : string,
+        strength : string
+    }
 
     export default defineComponent({
         name: 'ToolsAndSkills',
+        components : {
+            Tooltip
+        },
         props: {
-            nameValue: String
+            data: {
+                default : () => {/**/}, //comment to circumvent ts-lint bug 
+                type : Object
+            },
         },
         setup(props) {
 
+            const store = useStore()
             const publicPath = ref(process.env.BASE_URL)
+
+            const showTooltip = computed(() => {
+                return store.state.tooltip_config ? store.state.tooltip_config.tooltipActiveState : false
+            })
 
             const svgDictionary: Record<string, string> = {
                 Html : 'images/html-svg.svg',
@@ -29,21 +48,29 @@
                 return key ? publicPath.value + svgDictionary[key] : ''
             }
 
+            const dispatchTooltipConfig = (value:boolean) :void => {
+                const identifierKey = props.data.name
+                store.dispatch('activateTooltip', identifierKey)
+            }
+
             return {
+                props,
                 identifySVGByNameValue,
-                props
+                dispatchTooltipConfig,
+                showTooltip
             }
         }
 })
 </script>
 
 <template>
-	<div class="port-tools-and-skills">
+	<button class="port-tools-and-skills" @click="dispatchTooltipConfig()">
         <div class="port-tools-and-skills__image-container">
-            <img :src="identifySVGByNameValue(props.nameValue)" alt="">
+            <img :src="identifySVGByNameValue(props.data.name)" alt="">
         </div>
-        <p class="port-medium-book port-medium-book--wide">{{props.nameValue}}</p>
-    </div>
+        <p class="port-medium-book port-medium-book--wide">{{props.data.name}}</p>
+        <Tooltip v-if="props.data.tooltipShown" :tooltipData="props.data"/>
+    </button>
 </template>
 
 
@@ -51,8 +78,22 @@
     @import '../../foundation/scss/variables.scss';
 
     .port-tools-and-skills {
+        position: relative;
+        z-index: 5555;
         display: flex;
         align-items: center;
+        background-color: transparent;
+        border: none;
+        
+        p {
+            transition: padding 0.15s ease-in-out;
+        }
+
+        &:hover {
+            p {
+                padding-left: 3rem;
+            }
+        }
 
         &__image-container {
             height: auto;

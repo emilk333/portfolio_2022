@@ -93,7 +93,11 @@
         </section>
 
         <section class="port-project-template__lower-container port-project-template__accordion-is-expanded" :class="isExpanded">
-            <a class="port-button port-button--project-link" :class="selectTypeButtonColor(props.projectData.typeId)" :href="props.projectData.link" v-html="props.projectData.linkIcon"></a>
+            <div class="port-button-container">
+                <a class="port-button" :class="selectTypeButtonColor(props.projectData.typeId)" :href="props.projectData.link">
+                    <div v-html="props.projectData.linkIcon" class="port-button__project-link"></div>
+                </a>
+            </div>
             <div class="port-project-template__lower-text-info-divider">
                 <div>
                     <h3 class="port-small-bold">About</h3>

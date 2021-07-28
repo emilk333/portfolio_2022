@@ -29,6 +29,10 @@
     font-family: 'AirbnbCerealBook', Arial, Helvetica, sans-serif;
     color: $base-dark-color;
     opacity: 0.5;
+
+    &--dark {
+        opacity: 1;
+    }
 }
 
 

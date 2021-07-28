@@ -23,11 +23,11 @@
         <div class="port-header__container">
 
             <section class="port-header__left-section">
-                <div class="port-header__circle-container">
+                <a href="/somerere" class="port-header__circle-container">
                     <div class="port-header__img-container">
                         <img src="https://images.pexels.com/photos/3671091/pexels-photo-3671091.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="">
                     </div>
-                </div>
+                </a>
                 <div class="port-header__profile-mini-text-container">
                     <p class="port-header__profile-text-upper port-medium-medium">Emil Kristoffersen</p>
                     <span class="port-header__profile-text-lower port-small-book">Interface enthusiast</span>
