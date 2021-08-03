@@ -69,7 +69,9 @@
             <img :src="identifySVGByNameValue(props.data.name)" alt="">
         </div>
         <p class="port-medium-book port-medium-book--wide">{{props.data.name}}</p>
-        <Tooltip v-if="props.data.tooltipShown" :tooltipData="props.data"/>
+        <transition name="slide-fade">
+            <Tooltip v-if="props.data.tooltipShown" :tooltipData="props.data"/>
+        </transition>
     </button>
 </template>
 
@@ -84,6 +86,7 @@
         align-items: center;
         background-color: transparent;
         border: none;
+        cursor: pointer;
         
         p {
             transition: padding 0.15s ease-in-out;

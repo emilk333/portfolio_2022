@@ -18,7 +18,6 @@
             }
 
             const levelColor = computed(() => {
-                console.log(props.tooltipData ? levelColorClassDictionary[props.tooltipData.tooltipStrengthLevel] : "")
                 return props.tooltipData ? levelColorClassDictionary[props.tooltipData.tooltipStrengthLevel] : ""
             })
 
@@ -47,11 +46,12 @@
     .port-tooltip {
         position: absolute;
         z-index: 6666;
-        bottom: 6rem;
+        bottom: 5.2rem;
         left: -0.5rem;
         background-color: $color-white;
         
         &__wrapper {
+            cursor: default;
             max-width: 22rem;
             min-width: 18rem;
             width: 100%;

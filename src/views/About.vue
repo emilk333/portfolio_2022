@@ -84,12 +84,27 @@ export default defineComponent({
 			store.dispatch('setToolsDataInStore', toolsData)
 		}) 
 
-		const toolsDataFromStore = computed(() => {
-			return store.state.tools_data
+		const techToolsDataFromStore = computed(() => {
+			return store.state.tools_data.filter((item:Record<string, string>) => item.type === 'tech')
 		})
 
+		const designToolsDataFromStore = computed(() => {
+			return store.state.tools_data.filter((item:Record<string, string>) => item.type === 'design')
+		})
+
+		const activateBackdrop = computed(() => {
+			return store.state.tooltip_is_active ? 'port-tooltip__backdrop--active' : ''
+		})
+
+		const closeAllTooltips = () => {
+			store.dispatch('deactiveTooltip')
+		}
+
 		return {
-			toolsDataFromStore
+			closeAllTooltips,
+			activateBackdrop,
+			designToolsDataFromStore,
+			techToolsDataFromStore
 		}
 	}
 })
@@ -97,6 +112,7 @@ export default defineComponent({
 
 <template>
 	<div class="port-about">
+		<div class="port-tooltip__backdrop" :class="activateBackdrop" @click="closeAllTooltips"></div>
 		<article class="port-about__container">
 			<section class="port-about__upper-wrapper">
 				<div class="port-svg-background-container port-svg-background-container--about-left-variant">
@@ -151,19 +167,19 @@ export default defineComponent({
 					</div>
 					<div class="port-about__text-container-top-margin">
 						<h3 class="port-small-bold">Design tools</h3>
-						<template v-for="tool in toolsDataFromStore" :key="tool">
-							<ToolsAndSkills :data="tool"/>
+						<template v-for="designTool in designToolsDataFromStore" :key="designTool">
+							<ToolsAndSkills :data="designTool"/>
 						</template>
 					</div>
 				</div>
-				<!-- <div>
+				<div>
 					<div>
 						<h3 class="port-small-bold">Familiar technology</h3>
-						<template v-for="technology in technologyDataFromStore" :key="technology">
+						<template v-for="technology in techToolsDataFromStore" :key="technology">
 							<ToolsAndSkills :data="technology"/>
 						</template>
 					</div>
-				</div> -->
+				</div>
 			</section>
 
 		</article>
@@ -173,6 +189,20 @@ export default defineComponent({
 
 <style scoped lang="scss">
 	@import '../foundation/scss/variables.scss';
+
+	.port-tooltip__backdrop {
+		display: none;
+
+		&--active {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0; 
+			height: 120vh;
+			width: 100vw; 
+			background-color: transparent;	
+		}
+	}
 
     .port-about {
 
