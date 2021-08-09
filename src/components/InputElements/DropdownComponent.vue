@@ -6,8 +6,17 @@
 
 	export default defineComponent({
 		name: 'DropdownComponent',
-		setup() {
-            return {}
+        props: {
+            dropdownData : {
+                type : Object,
+                default : () => {/**/}, //comment to circumvent ts-lint bug 
+            }
+        },
+		setup(props) {
+
+            return {
+                props
+            }
 		}
 })
 </script>
@@ -15,9 +24,7 @@
 <template>
 	<div class="port-dropdown__wrapper">
         <select class="port-dropdown" name="port-dropdown--filter">
-            <option value="1">UI Design</option>
-            <option value="1">UX Design</option>
-            <option value="1">Something elseXXX</option>
+            <option v-for="(option, index) in props.dropdownData" :key="index" value="">{{option}}</option>
         </select>
     </div>
 </template>

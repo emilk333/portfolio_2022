@@ -2,7 +2,8 @@
 
 
 <script lang="ts">
-	import { defineComponent } from 'vue'
+	import { defineComponent, computed } from 'vue'
+    import { useStore } from 'vuex'
 	import DropdownComponent from '../InputElements/DropdownComponent.vue'
 
 	export default defineComponent({
@@ -11,7 +12,20 @@
 			DropdownComponent
 		},
 		setup() {
-            return {}
+            const store = useStore()
+
+            const projectTypeDataFromStore = computed(() => {
+                const types = store.state.project_type_data ?? []
+                const year = store.state.project_year_data ?? []
+                const association = store.state.project_association_data ?? []
+                
+                const projectCategories = [types, year, association]
+                return projectCategories
+			})	
+
+            return {
+                projectTypeDataFromStore
+            }
 		}
 })
 </script>
@@ -19,9 +33,9 @@
 <template>
 	<article class="port-filter">
         <div class="port-filter__dropdown-container">
-            <DropdownComponent />
-            <DropdownComponent />
-            <DropdownComponent />
+            <template v-for="(dropdownFilter, index) in projectTypeDataFromStore" :key="index">
+                <DropdownComponent :dropdownData="dropdownFilter"/>
+            </template>
         </div>
         <div class="port-filter__tag-container">
             <span class="port-filter__tag port-small-medium">UI design</span>

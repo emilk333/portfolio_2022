@@ -2,7 +2,8 @@
 
 
 <script lang="ts">
-	import { defineComponent, ref } from 'vue'
+	import { defineComponent, onMounted, ref, computed } from 'vue'
+	import { useStore } from 'vuex'
 	import FilterComponent from '../components/FilterComponent/FilterComponent.vue'
 	import ProjectTemplate from '../components/ProjectTemplate/ProjectTemplate.vue'
 
@@ -14,6 +15,7 @@
 		},
 		setup() {
 
+			const store = useStore()
 			const projectData = ref([
 				{
 					name : "Hotsreplay",
@@ -43,8 +45,16 @@
 				}
 			])
 
+			onMounted(() => {
+				store.dispatch('setProjectDataInStore', projectData)
+			}) 
+
+			const projectDataFromStore = computed(() => {
+				return store.state.project_data
+			})	
+
 			return {
-				projectData
+				projectDataFromStore
 			}
 		}
 })
@@ -56,7 +66,7 @@
 			<FilterComponent />
 		</section>
 		<section class="port-projects__lower-container">
-			<template v-for="project in projectData" :key="project">
+			<template v-for="project in projectDataFromStore" :key="project">
 				<ProjectTemplate :projectData="project"/>
 			</template>
 		</section>
