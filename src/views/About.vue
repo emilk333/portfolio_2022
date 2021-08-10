@@ -223,7 +223,7 @@ export default defineComponent({
 			margin-bottom: 10rem;
 
 			@include mq('tablet') {
-				margin-top: 25rem;
+				margin-top: 22rem;
 			}
 		}
 

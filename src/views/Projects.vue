@@ -75,10 +75,15 @@
 
 
 <style scoped lang="scss">
+	@import '../foundation/scss/breakpoints.scss';
 
 	.port-projects {
 		margin-top: 10rem;
 		padding-top: 3rem;
+
+		@include mq('tablet') {
+			margin-top: 15rem;
+		}
 
 		&__upper-container {
 			margin-bottom: 5rem;

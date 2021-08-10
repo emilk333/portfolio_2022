@@ -100,7 +100,7 @@ export default defineComponent({
 
 		@include mq('tablet') {
 			min-width: unset;
-			padding-left: 8rem;
+			padding-left: 4rem;
 		}
 
 		&__wrapper {

@@ -115,6 +115,7 @@
 
 <style scoped lang="scss">
     @import '../../foundation/scss/variables.scss';
+    @import '../../foundation/scss/breakpoints.scss';
 
     .port-header {
         width: 100%;
@@ -162,6 +163,10 @@
             z-index: 9999;
             position: relative;
             padding: 2rem 0;
+
+            @include mq('tablet-wide') {
+				margin: 0 3rem;
+			}
         }
         
         &__container {
@@ -172,6 +177,10 @@
             position: relative;
             padding: 0 4rem;
             height: 100%;
+
+            @include mq('tablet-wide') {
+				padding: 0;
+			}
         }
 
         &__left-section, &__right-section {
@@ -192,12 +201,24 @@
             margin-right: auto;
             height: 100%;
             display: flex;
+
+            @include mq('tablet-wide') {
+                left: -4rem;
+				top: 7rem;
+                width: max-content;
+			}
         }
 
         &__right-section {
             display: flex;
             justify-content: flex-end;
             margin-left: auto;
+
+            @include mq('tablet-wide') {
+                position: absolute;
+                top: 37px;
+                right: 40px;
+			}
         }
 
         &__profile-mini-text-container {

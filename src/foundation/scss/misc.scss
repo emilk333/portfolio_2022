@@ -13,6 +13,11 @@
     &--header-variant-right {
         left: -105px;
         top: -93px;
+
+        @include mq('tablet-wide') {
+            left: -25px;
+            top: -102px;
+        }
     }
 
     &--contact-variant {
