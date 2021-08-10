@@ -11,7 +11,8 @@ export default createStore({
 		project_data : undefined,
 		project_type_data : undefined,
 		project_year_data : undefined,
-		project_association_data : undefined
+		project_association_data : undefined,
+		data_to_filter_on : []
 	},
 
 	mutations: {
@@ -38,6 +39,10 @@ export default createStore({
 
 		SET_PROJECT_ASSOCIATION(state, payload) {
 			state.project_association_data = payload
+		},
+
+		SET_FILTER_ON_THIS_REQUEST(state, payload) {
+			state.data_to_filter_on = [...state.data_to_filter_on, ...payload] as any
 		},
 	},
 
@@ -74,10 +79,42 @@ export default createStore({
 			_context.dispatch('createDropdownFiltersByType', {payload, category : 'association', mutation : 'SET_PROJECT_ASSOCIATION'})
 		},
 
-		createDropdownFiltersByType(_context, {payload, category, mutation}) {
+		createDropdownFiltersByType(_context, { payload, category, mutation }) {
 			const tempProjectArray = deepClone(payload.value)
 			const uniqueProjectTypes = [...new Set(tempProjectArray.map((item:any) => item[category]))]
-			_context.commit(mutation, uniqueProjectTypes)
+			const projectTypesWithSelected = uniqueProjectTypes.map(item => {
+				return {
+					value : item,
+					category : category
+				}
+			})
+			_context.commit(mutation, projectTypesWithSelected)
+		},
+
+		filterDropdownValue(_context, filteredValue) {
+			
+			// console.log(filteredValue, category)
+			// const filteredProjectData = _context.state.project_data ?? []
+			// const x = filteredValue.flatMap((value:any) => {
+			// 	return filteredProjectData.filter((project:any) => project[category] === value)
+			// })
+			// console.log(x)
+			// const filterOnThisRequest = filteredValue.map((item:any) => {
+			// 	return {
+			// 		value : item.value,
+			// 		category : item.category
+			// 	}
+			// }) 
+
+			let currentDataToFilterList = [] as any
+			
+			currentDataToFilterList = [..._context.state.data_to_filter_on, ...filteredValue]
+
+			currentDataToFilterList.filter((v:any,i:number,a:any)=>a.findIndex((t:any)=>(t.category === v.category && t.value===v.value))===i)
+			
+
+			_context.commit('SET_FILTER_ON_THIS_REQUEST', currentDataToFilterList) 
+			//console.log(_context.state.data_to_filter_on)
 		}
 	},
 })

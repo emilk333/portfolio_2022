@@ -19,7 +19,7 @@
 </script>
 
 <template>
-	<div class="port-header">
+	<header class="port-header">
         <div class="port-header__container">
 
             <section class="port-header__left-section">
@@ -109,7 +109,7 @@
             </section>
 
         </div>
-    </div>
+    </header>
 </template>
 
 

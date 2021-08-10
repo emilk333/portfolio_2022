@@ -2,7 +2,8 @@
 
 
 <script lang="ts">
-	import { defineComponent } from 'vue'
+	import { defineComponent, onMounted, ref } from 'vue'
+    import { useStore } from 'vuex'
 
 	export default defineComponent({
 		name: 'DropdownComponent',
@@ -13,19 +14,37 @@
             }
         },
 		setup(props) {
+            const store = useStore()
+            const selectedDropdownValue = ref([])
+
+            const selectNewDropdownValue = () => {
+         
+                store.dispatch('filterDropdownValue', selectedDropdownValue.value)
+            }
+
+            onMounted(() => {
+                //console.log(props)
+            })
 
             return {
-                props
+                props,
+                selectedDropdownValue,
+                selectNewDropdownValue
             }
 		}
 })
 </script>
 
 <template>
-	<div class="port-dropdown__wrapper">
-        <select class="port-dropdown" name="port-dropdown--filter">
-            <option v-for="(option, index) in props.dropdownData" :key="index" value="">{{option}}</option>
-        </select>
+
+	<div class="port-dropdown__wrapper" v-if="props.dropdownData.length > 1">
+        <template v-for="(option, index) in props.dropdownData" :key="index">
+            <article class="port-dropdown__popup">
+                <input @change="selectNewDropdownValue" type="checkbox" :id="option" :value="option" v-model="selectedDropdownValue">
+                <label :for="option">{{option.value}}</label>
+            </article>
+        </template>
+        <div class="port-dropdown"></div>
     </div>
 </template>
 
@@ -48,6 +67,10 @@
 
         -moz-appearance: none;
         -webkit-appearance: none;
+
+        &__popup {
+
+        }
 
         &__wrapper {
             position: relative;

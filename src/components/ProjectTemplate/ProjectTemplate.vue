@@ -128,6 +128,7 @@
 
 <style scoped lang="scss">
     @import '../../foundation/scss/variables.scss';
+    @import '../../foundation/scss/breakpoints.scss';
 
     .port-project-template {
         margin-bottom: 6rem;
@@ -154,10 +155,21 @@
             margin: 0 -2rem;
             padding-top: 3rem;
             padding-bottom: 0.5rem;
+
+            @include mq('tablet') {
+                padding-top: 2rem;
+                margin-left: -2rem;
+                margin-right: 0;
+                flex-direction: column;
+            }
             
             div {
                 width: 50%;
                 margin: 0 2rem;
+
+                @include mq('tablet') {
+                    width: 100%;
+                }
             }
         }
 
@@ -167,10 +179,19 @@
             height: 0;
             transition: height 0.35s cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s, opacity 0.25s ease-in-out;
 
+            @include mq('tablet') {
+                padding: 0 2rem;
+            }
+
             &--accordion-is-expanded {
                 transition: height 0.45s cubic-bezier(0.075, 0.82, 0.165, 1), opacity 0.3s ease-in-out 0.1s;
                 opacity: 1;
                 height: 35rem;
+
+                @include mq('tablet') {
+                    padding-top: 2rem;
+                    height: 47rem;
+                }
             }
 
             .port-medium-book {
@@ -183,14 +204,30 @@
             margin-bottom: -0.5rem;
         }
 
+        &__title-container {
+            @include mq('tablet') {
+                padding-left: 2.2rem;
+                margin-top: -1rem;
+            }
+        }
+
         &__text-container {
             display: flex;
+
+            @include mq('tablet') {
+                flex-direction: column;
+            }
         }
 
         &__info-wrapper {
             display: flex;   
             margin-left: auto;
             padding-top: 2rem;
+
+            @include mq('tablet') {
+                padding-top: 0;
+                margin-left: unset;
+            }
         }
         
         &__info-container {
@@ -198,6 +235,10 @@
             display: flex;
             flex-direction: column;
             position: relative;
+
+            @include mq('tablet') {
+                margin: 0 2.5rem;
+            }
 
             &:last-child {
                 margin-right: 0;

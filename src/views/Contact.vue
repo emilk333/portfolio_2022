@@ -83,6 +83,7 @@ export default defineComponent({
 
 
 <style scoped lang="scss">
+	@import '../foundation/scss/breakpoints.scss';
 
     .port-contact {
 		width: 100%;
@@ -91,6 +92,16 @@ export default defineComponent({
 		min-width: 60rem;
 		position: relative;
 		height: 100vh;
+
+		@include mq('desktop') {
+			max-width: 50rem;
+			padding-top: 10rem;
+		}
+
+		@include mq('tablet') {
+			min-width: unset;
+			padding-left: 8rem;
+		}
 
 		&__wrapper {
 			position: absolute;

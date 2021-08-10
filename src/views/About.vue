@@ -154,13 +154,13 @@ export default defineComponent({
 
 			</section>
 			<section class="port-about__lower-wrapper">
-				<div>
+				<div class="port-about__lower-container">
 					<div>
 						<h3 class="port-small-bold">Strongsuit</h3>
 						<p class="port-medium-book">Good technical understanding of web technologies combined with design knowledge, reaching from research to design processes to high fidelity mockups and more. Currently I’m working as a frontend developer for a consultancy in Copenhagen 🇩🇰</p>
 					</div>
 				</div>
-				<div>
+				<div class="port-about__lower-container">
 					<div>
 						<h3 class="port-small-bold">Languages</h3>
 						<p class="port-medium-book">Fluent in English and Danish</p>
@@ -172,7 +172,7 @@ export default defineComponent({
 						</template>
 					</div>
 				</div>
-				<div>
+				<div class="port-about__lower-container">
 					<div>
 						<h3 class="port-small-bold">Familiar technology</h3>
 						<template v-for="technology in techToolsDataFromStore" :key="technology">
@@ -189,6 +189,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 	@import '../foundation/scss/variables.scss';
+	@import '../foundation/scss/breakpoints.scss';
 
 	.port-tooltip__backdrop {
 		display: none;
@@ -220,11 +221,19 @@ export default defineComponent({
 			margin: 0 auto;
 			margin-top: 30rem;
 			margin-bottom: 10rem;
+
+			@include mq('tablet') {
+				margin-top: 25rem;
+			}
 		}
 
 		&__upper-wrapper {
 			margin-bottom: 8rem;
 			position: relative;
+
+			@include mq('tablet') {
+				margin-bottom: 4rem;
+			}
 		}
 
 		&__lower-wrapper {
@@ -233,10 +242,28 @@ export default defineComponent({
 			grid-template-rows: 1fr;
 			grid-column-gap: 100px;
 			grid-row-gap: px;
+
+			@include mq('tablet') {
+				grid-template-columns: repeat(1, 1fr);
+
+				&+div {
+					margin-bottom: 2rem;
+				}
+			}
+		}
+
+		&__lower-container {
+			@include mq('tablet') {
+				margin-bottom: 2rem;
+			}
 		}
 
         &__text-container-top-margin {
             margin-top: 6rem;
+
+			@include mq('tablet') {
+				margin-top: 4.5rem;
+			}
         }
 	}
 

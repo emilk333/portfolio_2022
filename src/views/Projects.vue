@@ -2,7 +2,7 @@
 
 
 <script lang="ts">
-	import { defineComponent, onMounted, ref, computed } from 'vue'
+	import { defineComponent, onBeforeMount, ref, computed } from 'vue'
 	import { useStore } from 'vuex'
 	import FilterComponent from '../components/FilterComponent/FilterComponent.vue'
 	import ProjectTemplate from '../components/ProjectTemplate/ProjectTemplate.vue'
@@ -45,7 +45,7 @@
 				}
 			])
 
-			onMounted(() => {
+			onBeforeMount(() => {
 				store.dispatch('setProjectDataInStore', projectData)
 			}) 
 
