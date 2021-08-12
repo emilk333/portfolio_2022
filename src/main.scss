@@ -11,9 +11,6 @@
 
 html { font-size: 10px; }
 
-.port-main {
-    padding: 0 2rem;
-}
 
 a {
   text-decoration: none;
@@ -28,6 +25,16 @@ img {
 ul {
   list-style-type: none;
   padding-left: 0;
+}
+
+header {
+  padding: 0 2rem;
+  box-sizing: border-box;
+
+  &+div {
+    box-sizing: border-box;
+    padding: 0 2rem;
+  }
 }
 
 

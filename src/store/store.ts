@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import deepClone from '../foundation/js/deepClone'
+import deepClone from '../foundation/js/deepClone.ts'
 
 export default createStore({
 

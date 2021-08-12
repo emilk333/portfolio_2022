@@ -2,18 +2,38 @@
 
 
 <script lang="ts">
-    import { defineComponent, onMounted, ref } from 'vue';
+    import { computed, defineComponent, onMounted, ref, watch } from 'vue';
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	import detectScrollDirection from '../../foundation/js/detecScrollDirection.ts'
 
     export default defineComponent({
         name: 'TheHeader',
         setup() {
 
+            let scrollDirection = ref(0)
+            const fixedHeaderDuringScroll = computed(() => {
+                return !scrollDirection.value ? '' : 'port-header__middle-section--fixed'         
+            })
+
+            const animateCursorArea = (e:MouseEvent, areaToHover:HTMLElement) => {
+                areaToHover.style.setProperty('background-position',(e.clientX - 27)+'px '+(e.clientY - 23)+'px')
+            } 
+
             onMounted(() => {
                 const areaToHover = ref((document.querySelector('.js-port-mouse-hover-effect') as HTMLElement) ?? "")
                 document.body.onmousemove = function(e) {
-                    areaToHover.value.style.setProperty('background-position',(e.clientX - 27)+'px '+(e.clientY - 23)+'px');
+                    animateCursorArea(e, areaToHover.value)
                 }
+
+                document.addEventListener("scroll", function() {
+					scrollDirection.value = detectScrollDirection.checkScroll()
+				}, false);
             }) 
+
+            return {
+                fixedHeaderDuringScroll
+            }
         }
 });
 </script>
@@ -55,7 +75,7 @@
                 </div>
             </section>
 
-            <section class="port-header__middle-section">
+            <section class="port-header__middle-section" :class="fixedHeaderDuringScroll">
                 <ul class="port-header__nav js-port-mouse-hover-effect">
                     <li class="port-header__nav-item port-nav-link">
                         <router-link to="/projects">
@@ -133,6 +153,8 @@
             background-size:0 0; 
             align-items: center;
             cursor: none;
+            transform: translateY(-40px);
+            transition: transform 0.25s ease-in-out;
 
             a {
                 cursor: none;
@@ -194,6 +216,7 @@
 
         &__middle-section {
             position: absolute;
+            top: 4rem;
             left:0;
             right:0;
             width: 410px;
@@ -202,9 +225,34 @@
             height: 100%;
             display: flex;
 
+            &--fixed {
+                display: none;
+
+                @include mq('tablet-wide') {
+                    position: fixed;
+                    top: 0!important;
+                    display: block;
+                    left: 0!important;;
+
+                    .port-header__nav-item {
+                        width: 33.3%;
+                        padding: 2.5rem 0;
+                    }
+
+                    .port-header__nav {
+                        background-color: white;
+                        padding: 0;
+                        margin: 0;
+                        width: 100vw;
+                        box-shadow: rgba($dark-blue, 0.2) 0px 2px 8px 0px;
+                        transform: translateY(0);
+                    }
+                }
+            }
+
             @include mq('tablet-wide') {
-                left: -4rem;
-				top: 7rem;
+                left: -1rem;
+				top: 11rem;
                 width: max-content;
 			}
         }
