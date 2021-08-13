@@ -18,8 +18,11 @@
             const selectedDropdownValue = ref([])
 
             const selectNewDropdownValue = () => {
-         
-                store.dispatch('filterDropdownValue', selectedDropdownValue.value)
+                const filterConfig = {
+                    value : selectedDropdownValue.value,
+                    category : props.dropdownData.category
+                }
+                store.dispatch('filterDropdownValue', filterConfig)
             }
 
             onMounted(() => {
@@ -37,8 +40,8 @@
 
 <template>
 
-	<div class="port-dropdown__wrapper" v-if="props.dropdownData.length > 1">
-        <template v-for="(option, index) in props.dropdownData" :key="index">
+	<div class="port-dropdown__wrapper" v-if="props.dropdownData.data.length > 1">
+        <template v-for="(option, index) in props.dropdownData.data" :key="index">
             <article class="port-dropdown__popup">
                 <input @change="selectNewDropdownValue" type="checkbox" :id="option" :value="option" v-model="selectedDropdownValue">
                 <label :for="option">{{option.value}}</label>
@@ -67,10 +70,6 @@
 
         -moz-appearance: none;
         -webkit-appearance: none;
-
-        &__popup {
-
-        }
 
         &__wrapper {
             position: relative;

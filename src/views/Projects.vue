@@ -16,7 +16,7 @@
 		setup() {
 
 			const store = useStore()
-			const projectData = ref([
+			const projectData = [
 				{
 					name : "Hotsreplay",
 					type: "UI Design",
@@ -43,7 +43,7 @@
 					goal : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ipsum erat, euismod at mi congue, imperdiet commodo augue",
 					process: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ipsum erat, euismod at mi congue, imperdiet commodo augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ipsum erat, euismod at mi congue, imperdiet commodo augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ipsum erat, euismod at mi congue, imperdiet commodo augue"
 				}
-			])
+			]
 
 			onBeforeMount(() => {
 				store.dispatch('setProjectDataInStore', projectData)

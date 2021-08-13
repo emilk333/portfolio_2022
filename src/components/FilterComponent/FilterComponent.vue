@@ -15,11 +15,25 @@
             const store = useStore()
 
             const projectTypeDataFromStore = computed(() => {
+                
                 const types = store.state.project_type_data ?? {}
                 const year = store.state.project_year_data ?? {}
                 const association = store.state.project_association_data ?? {}
                 
-                const projectCategories = [types, year, association]
+                const projectCategories = [
+                    {
+                        category : "type",
+                        data : types
+                    },
+                    {
+                        category : "year",
+                        data : year
+                    },
+                    {
+                        category : "association",
+                        data : association
+                    },
+                ]
                 return projectCategories
 			})	
 

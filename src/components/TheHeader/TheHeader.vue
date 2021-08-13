@@ -17,10 +17,12 @@
             })
 
             const animateCursorArea = (e:MouseEvent, areaToHover:HTMLElement) => {
-                areaToHover.style.setProperty('background-position',(e.clientX - 27)+'px '+(e.clientY - 23)+'px')
+                areaToHover.style.setProperty('background-position',(e.clientX - 27)+'px '+(e.clientY + 10)+'px')
             } 
 
             onMounted(() => {
+                console.log("If you think using Vue with Vuex and TS is overkill for a static portfolio site .. you are absolutely right. I just can't help myself")
+                
                 const areaToHover = ref((document.querySelector('.js-port-mouse-hover-effect') as HTMLElement) ?? "")
                 document.body.onmousemove = function(e) {
                     animateCursorArea(e, areaToHover.value)
@@ -224,6 +226,7 @@
             margin-right: auto;
             height: 100%;
             display: flex;
+            justify-content: center;
 
             &--fixed {
                 display: none;

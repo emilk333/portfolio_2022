@@ -8,11 +8,15 @@ export default createStore({
 	state: {
 		tools_data : undefined ?? [],
 		tooltip_is_active : false,
-		project_data : undefined,
+		project_data : [],
+		original_project_data : [],
 		project_type_data : undefined,
 		project_year_data : undefined,
 		project_association_data : undefined,
-		data_to_filter_on : []
+
+		filtered_project_type : [],
+		filtered_project_year : [],
+		filtered_project_association : [],
 	},
 
 	mutations: {
@@ -23,6 +27,10 @@ export default createStore({
 
 		SET_TOOLTIP_ACTIVE_STATE(state, payload) {
 			state.tooltip_is_active = payload
+		},
+
+		SET_ORIGINAL_PROJECT_DATA_IN_STORE(state, payload) {
+			state.original_project_data = payload
 		},
 
 		SET_PROJECT_DATA_IN_STORE(state, payload) {
@@ -41,9 +49,15 @@ export default createStore({
 			state.project_association_data = payload
 		},
 
-		SET_FILTER_ON_THIS_REQUEST(state, payload) {
-			state.data_to_filter_on = [...state.data_to_filter_on, ...payload] as any
-		},
+		SET_FILTERED_DATA(state, payload) {
+			if (payload.category === "type") {
+				state.filtered_project_type = payload.value
+			} else if (payload.category === "year") {
+				state.filtered_project_year = payload.value
+			} else {
+				state.filtered_project_association = payload.value
+			}
+		}
 	},
 
 	actions: {
@@ -74,47 +88,41 @@ export default createStore({
 
 		setProjectDataInStore(_context, payload) {
 			_context.commit('SET_PROJECT_DATA_IN_STORE', payload)
+			_context.commit('SET_ORIGINAL_PROJECT_DATA_IN_STORE', payload)
 			_context.dispatch('createDropdownFiltersByType', {payload, category : 'type', mutation : 'SET_PROJECT_TYPES'})
 			_context.dispatch('createDropdownFiltersByType', {payload, category : 'year', mutation : 'SET_PROJECT_YEAR'})
 			_context.dispatch('createDropdownFiltersByType', {payload, category : 'association', mutation : 'SET_PROJECT_ASSOCIATION'})
 		},
 
 		createDropdownFiltersByType(_context, { payload, category, mutation }) {
-			const tempProjectArray = deepClone(payload.value)
+			const tempProjectArray = deepClone(payload)
 			const uniqueProjectTypes = [...new Set(tempProjectArray.map((item:any) => item[category]))]
+			
 			const projectTypesWithSelected = uniqueProjectTypes.map(item => {
 				return {
 					value : item,
+					checked : true,
 					category : category
 				}
 			})
 			_context.commit(mutation, projectTypesWithSelected)
 		},
 
-		filterDropdownValue(_context, filteredValue) {
+		filterDropdownValue(_context, filteredValue) {		
+			_context.commit('SET_FILTERED_DATA', filteredValue) 
 			
-			// console.log(filteredValue, category)
-			// const filteredProjectData = _context.state.project_data ?? []
-			// const x = filteredValue.flatMap((value:any) => {
-			// 	return filteredProjectData.filter((project:any) => project[category] === value)
-			// })
-			// console.log(x)
-			// const filterOnThisRequest = filteredValue.map((item:any) => {
-			// 	return {
-			// 		value : item.value,
-			// 		category : item.category
-			// 	}
-			// }) 
+			const projectData = deepClone(_context.state.original_project_data ?? [])
+			const mergedFilterData = deepClone([..._context.state.filtered_project_type, ..._context.state.filtered_project_year, ..._context.state.filtered_project_association].map((item:Record<string, unknown>) => item.value))
 
-			let currentDataToFilterList = [] as any
-			
-			currentDataToFilterList = [..._context.state.data_to_filter_on, ...filteredValue]
+			const filteredProjectData = projectData.filter((project:Record<string, unknown>) => {
+				return (mergedFilterData.includes(project.type)||mergedFilterData.includes(project.year)||mergedFilterData.includes(project.association))
+			})
 
-			currentDataToFilterList.filter((v:any,i:number,a:any)=>a.findIndex((t:any)=>(t.category === v.category && t.value===v.value))===i)
-			
-
-			_context.commit('SET_FILTER_ON_THIS_REQUEST', currentDataToFilterList) 
-			//console.log(_context.state.data_to_filter_on)
+			if (!filteredProjectData.length) {
+				_context.commit('SET_PROJECT_DATA_IN_STORE', projectData)
+			} else {
+				_context.commit('SET_PROJECT_DATA_IN_STORE', filteredProjectData)
+			}
 		}
 	},
 })
