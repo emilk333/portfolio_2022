@@ -2,7 +2,7 @@
 
 
 <script lang="ts">
-	import { defineComponent, onMounted, ref } from 'vue'
+	import { defineComponent, watch, computed, ref } from 'vue'
     import { useStore } from 'vuex'
 
 	export default defineComponent({
@@ -16,8 +16,32 @@
 		setup(props) {
             const store = useStore()
             const selectedDropdownValue = ref([])
+            const dropdownPopupShownStatus = ref(false)
 
-            const selectNewDropdownValue = () => {
+            const tagsToBeRemoved = computed(() => {
+                return store.getters.removeFilterChoiceByTag
+            })
+
+            const showDropdownPopup = computed(() => {
+                return dropdownPopupShownStatus.value ? 'port-dropdown__popup--active' : ''
+            })
+
+            watch(tagsToBeRemoved, (newValue, oldValue) => {
+
+                if (selectedDropdownValue.value.length) {
+                    const filteredArray = selectedDropdownValue.value.filter((item:Record<string, unknown>) => {
+                        return item.value !== newValue
+                    })
+                    selectedDropdownValue.value = filteredArray
+                }
+                updateNewDropdownValue()
+            })
+
+            const toggleDropdownPopup = () => {
+                dropdownPopupShownStatus.value = !dropdownPopupShownStatus.value 
+            }
+
+            const updateNewDropdownValue = () => {
                 const filterConfig = {
                     value : selectedDropdownValue.value,
                     category : props.dropdownData.category
@@ -25,14 +49,13 @@
                 store.dispatch('filterDropdownValue', filterConfig)
             }
 
-            onMounted(() => {
-                //console.log(props)
-            })
-
             return {
                 props,
                 selectedDropdownValue,
-                selectNewDropdownValue
+                showDropdownPopup,
+                dropdownPopupShownStatus,
+                updateNewDropdownValue,
+                toggleDropdownPopup
             }
 		}
 })
@@ -41,19 +64,26 @@
 <template>
 
 	<div class="port-dropdown__wrapper" v-if="props.dropdownData.data.length > 1">
-        <template v-for="(option, index) in props.dropdownData.data" :key="index">
-            <article class="port-dropdown__popup">
-                <input @change="selectNewDropdownValue" type="checkbox" :id="option" :value="option" v-model="selectedDropdownValue">
-                <label :for="option">{{option.value}}</label>
+        <transition name="slide-fade">
+            <article class="port-dropdown__popup" :class="showDropdownPopup">
+                <template v-for="(option, index) in props.dropdownData.data" :key="index">
+                    <div class="port-dropdown__popup-check-wrapper">
+                        <input @change="updateNewDropdownValue" type="checkbox" :id="option.value+index" :value="option" v-model="selectedDropdownValue">
+                        <label class="port-medium-book" :for="option.value+index">{{option.value}}</label>
+                    </div>
+                </template>
             </article>
-        </template>
-        <div class="port-dropdown"></div>
+        </transition>
+
+        <div class="port-dropdown" @click="toggleDropdownPopup">Select a {{props.dropdownData.category}}</div>
+        <div class="port-dropdown__backdrop" v-if="dropdownPopupShownStatus" @click="toggleDropdownPopup"></div>
     </div>
 </template>
 
 
 <style scoped lang="scss">
     @import '../../foundation/scss/variables.scss';
+    @import '../../foundation/scss/breakpoints.scss';
 
 	.port-dropdown {
         cursor: pointer;
@@ -67,9 +97,20 @@
         font-family: "AirbnbCerealMedium", Arial, Helvetica, sans-serif;
         font-size: 1.2rem;
         color: rgba($dark-blue, 0.65);
+        display: flex;
+        align-items: center;
 
         -moz-appearance: none;
         -webkit-appearance: none;
+
+        &__backdrop {
+            top: -9rem;
+            left: -99rem;
+            height: 100vh;
+            width: 9999rem;
+            position: absolute;
+            background-color: transparent;
+        }
 
         &__wrapper {
             position: relative;
@@ -85,6 +126,42 @@
                 height: 1rem;
                 width: 1rem;    
                 content: ""
+            }
+
+            @include mq('phone-wide') {
+                max-width: unset;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+
+        &__popup {
+            box-shadow: rgb($dark-blue, 0.12) 0px 2px 8px 0px;
+            border-radius: 0.6rem;
+            padding: 1.5rem 1.5rem 1.5rem 1.8rem;
+            position: absolute;
+            inset: 0;
+            background-color: $color-white;
+            height: fit-content;
+            top: 4rem;
+            opacity: 0;
+            z-index: -1;
+
+            &--active {
+                opacity: 1;
+                z-index: 6666;
+            }
+        }
+
+        &__popup-check-wrapper {
+            padding: 0.8rem 0;
+
+            &>* {
+                cursor: pointer;
+            }
+
+            label {
+                padding-left: 1rem;
             }
         }
 	}

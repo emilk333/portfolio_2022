@@ -3,6 +3,10 @@ import { createStore } from 'vuex'
 // @ts-ignore
 import deepClone from '../foundation/js/deepClone.ts'
 
+interface IIndexType {
+    [index: string]: string;
+}
+
 export default createStore({
 
 	state: {
@@ -17,6 +21,7 @@ export default createStore({
 		filtered_project_type : [],
 		filtered_project_year : [],
 		filtered_project_association : [],
+		remove_tag_wrapper : undefined
 	},
 
 	mutations: {
@@ -57,6 +62,16 @@ export default createStore({
 			} else {
 				state.filtered_project_association = payload.value
 			}
+		},
+
+		SET_TAG_TO_REMOVE(state, payload) {
+			state.remove_tag_wrapper = payload
+		}
+	},
+
+	getters: {
+		removeFilterChoiceByTag: state => {
+			return state.remove_tag_wrapper
 		}
 	},
 
@@ -108,11 +123,13 @@ export default createStore({
 			_context.commit(mutation, projectTypesWithSelected)
 		},
 
-		filterDropdownValue(_context, filteredValue) {		
+		filterDropdownValue(_context, filteredValue) {	
 			_context.commit('SET_FILTERED_DATA', filteredValue) 
 			
 			const projectData = deepClone(_context.state.original_project_data ?? [])
-			const mergedFilterData = deepClone([..._context.state.filtered_project_type, ..._context.state.filtered_project_year, ..._context.state.filtered_project_association].map((item:Record<string, unknown>) => item.value))
+			const mergedFilterData = deepClone([..._context.state.filtered_project_type, 
+				..._context.state.filtered_project_year, 
+				..._context.state.filtered_project_association].map((item:Record<string, unknown>) => item.value))
 
 			const filteredProjectData = projectData.filter((project:Record<string, unknown>) => {
 				return (mergedFilterData.includes(project.type)||mergedFilterData.includes(project.year)||mergedFilterData.includes(project.association))

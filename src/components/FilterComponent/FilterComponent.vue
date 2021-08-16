@@ -2,7 +2,7 @@
 
 
 <script lang="ts">
-	import { defineComponent, computed } from 'vue'
+	import { defineComponent, computed, ref } from 'vue'
     import { useStore } from 'vuex'
 	import DropdownComponent from '../InputElements/DropdownComponent.vue'
 
@@ -13,6 +13,11 @@
 		},
 		setup() {
             const store = useStore()
+            const dropdownComponentRef = ref<InstanceType<typeof DropdownComponent>>() 
+
+            const removeFilterChoice = (tag:{category:string, checked: boolean, value: string}) => {
+                store.commit('SET_TAG_TO_REMOVE', tag.value)
+            }
 
             const projectTypeDataFromStore = computed(() => {
                 
@@ -21,24 +26,26 @@
                 const association = store.state.project_association_data ?? {}
                 
                 const projectCategories = [
-                    {
-                        category : "type",
-                        data : types
-                    },
-                    {
-                        category : "year",
-                        data : year
-                    },
-                    {
-                        category : "association",
-                        data : association
-                    },
+                    { category : "type", data : types },
+                    { category : "year", data : year },
+                    { category : "association", data : association},
                 ]
                 return projectCategories
 			})	
 
+            const selectedFilterChoicesTags = computed(() => {
+                const types = store.state.filtered_project_type
+                const year = store.state.filtered_project_year
+                const association = store.state.filtered_project_association
+
+                return [...types, ...year, ...association]
+            })
+
             return {
-                projectTypeDataFromStore
+                projectTypeDataFromStore,
+                selectedFilterChoicesTags,
+                removeFilterChoice,
+                dropdownComponentRef
             }
 		}
 })
@@ -52,9 +59,9 @@
             </template>
         </div>
         <div class="port-filter__tag-container">
-            <span class="port-filter__tag port-small-medium">UI design</span>
-            <span class="port-filter__tag port-small-medium">UI design</span>
-            <span class="port-filter__tag port-small-medium">UI design</span>
+            <template v-for="(tag, index) in selectedFilterChoicesTags" :key="index">
+                <span class="port-filter__tag port-small-medium" @click="removeFilterChoice(tag)">{{tag.value}}</span>
+            </template>
         </div>
     </article>
 </template>
@@ -62,6 +69,7 @@
 
 <style scoped lang="scss">
     @import '../../foundation/scss/variables.scss';
+    @import '../../foundation/scss/breakpoints.scss';
 
 	.port-filter {
         max-width: 65rem;
@@ -70,12 +78,36 @@
         flex-direction: column;
         align-items: center;
 
+        @include mq('phone-wide') {
+            position: relative;
+            z-index: 9999;
+            align-items: flex-start;
+        }
+
         &__dropdown-container, &__tag-container {
             display: flex;
         }
+
+        &__dropdown-container {
+            @include mq('tablet') {
+                flex-wrap: wrap;
+            }
+        }
+
+        &__tag-container {
+            @include mq('tablet') {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+            }
+
+            span {
+                font-size: 1rem;
+                white-space: pre;
+            }
+        }
         
         &__tag {
-            margin: 0 0.5rem;
+            margin: 0.5rem;
             cursor: pointer;
             border-radius: 2.5rem;
             background-color: $light-blue-opaque;

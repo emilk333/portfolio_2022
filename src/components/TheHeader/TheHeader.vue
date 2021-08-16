@@ -267,8 +267,8 @@
 
             @include mq('tablet-wide') {
                 position: absolute;
-                top: 37px;
-                right: 40px;
+                top: 3.7rem;
+                right: 2rem;
 			}
         }
 
