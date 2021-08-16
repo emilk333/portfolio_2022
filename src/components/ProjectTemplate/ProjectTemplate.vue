@@ -3,6 +3,7 @@
 
 <script lang="ts">
     import { defineComponent, ref, computed } from 'vue';
+    import { useStore } from 'vuex'
 
     interface IscrollIntoViewFunction {
         scrollIntoView: (scrollObject:Record<string, unknown>) => void
@@ -17,15 +18,15 @@
             }
         },
         setup(props) {
-            const expandedState = ref(false)
+            const store = useStore()
             const projectToScrollTo = ref<null | IscrollIntoViewFunction >(null)
 
-            const isExpanded = computed(() => {
-                return expandedState.value ? 'port-project-template__lower-container--accordion-is-expanded' : ''
+            const seeProjectDetailsClass = computed(() => {
+                return props.projectData.selected ? 'port-project-template--selected' : ''
             })
 
             const inspectProjectText = computed(() => {
-                return expandedState.value ? "Click button to see project" : "Click for more details"
+                return props.projectData.selected ? "Click button to see project" : "Click for more details"
             })
 
             const typeDotIndicator: Record<string, string> = {
@@ -46,27 +47,26 @@
                 return typeButtonColor[typeId]
             }
 
-            const toggleAccordion = (value:boolean):void => {
-                value ? expandedState.value = true : expandedState.value = false
-                if (value && projectToScrollTo.value) {   
-                    projectToScrollTo.value.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
-                }
+            const toggleProjectDetails = (selectedState: boolean, projectId:boolean):void => {
+                store.commit('SET_PROJECT_SELECTED', selectedState)
+                store.dispatch('toggleProjectDetailState', projectId)
             }
+
             return {
                 props,
-                isExpanded,
                 projectToScrollTo,
+                seeProjectDetailsClass,
                 inspectProjectText,
                 selectTypeDotIndicatorColor,
                 selectTypeButtonColor,
-                toggleAccordion,
+                toggleProjectDetails,
             }
         }
 });
 </script>
 
 <template>
-	<article class="port-project-template" ref="projectToScrollTo" @click="toggleAccordion(true)">
+	<article class="port-project-template " :class="seeProjectDetailsClass" ref="projectToScrollTo" @click="toggleProjectDetails(true, props.projectData.id)">
 
             <div class="port-project-template__main-container">
                 <div class="port-project-template__image-container" :style="{'background-image': `url(${props.projectData.image})`}"></div>
@@ -76,6 +76,36 @@
                         <h2 class="port-medium-extra-bold port-project-template__title">{{props.projectData.name}}</h2>
                         <p class="port-small-book">{{inspectProjectText}}</p>
                     </div>
+
+                    <section class="port-project-template__details-container" v-if="props.projectData.selected">
+                        <div class="port-button-container">
+                            <a class="port-button" :class="selectTypeButtonColor(props.projectData.typeId)" :href="props.projectData.link">
+                                <div v-html="props.projectData.linkIcon" class="port-button__project-link"></div>
+                            </a>
+                        </div>
+                        <section class="port-project-template__detail-text-container">
+                            <div>
+                                <h3 class="port-small-bold">About</h3>
+                                <p class="port-medium-book">{{props.projectData.about}}</p>
+                            </div>
+                            <div>
+                                <h3 class="port-small-bold">Goal</h3>
+                                <p class="port-medium-book">{{props.projectData.goal}}</p>
+                            </div>
+                            <div>
+                                <h3 class="port-small-bold">Process</h3>
+                                <p class="port-medium-book">{{props.projectData.process}}</p>
+                            </div>
+                        </section>
+                        <button class="port-button port-button--collapse" @click.stop="toggleProjectDetails(false, null)">
+                            <div class="port-project-template__collapse-svg-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10.71" height="11.016" viewBox="0 0 10.71 11.016">
+                                    <path id="Path_4" data-name="Path 4" d="M6.635,8.888h8.38v1.377H6.635l3.693,3.693-.973.973L4,9.577,9.355,4.222l.973.973Z" transform="translate(14.932 -4) rotate(90)" fill="#fff"/>
+                                </svg>
+                            </div>
+                            <p class="port-extra-small-bold">collapse</p>
+                        </button>
+                    </section>
 
                     <ul class="port-project-template__info-wrapper">
                         <li class="port-project-template__info-container">
@@ -95,37 +125,6 @@
                 </div>
 
             </div>
-
-            <!-- <section class="port-project-template__lower-container port-project-template__accordion-is-expanded" :class="isExpanded">
-                <div class="port-button-container">
-                    <a class="port-button" :class="selectTypeButtonColor(props.projectData.typeId)" :href="props.projectData.link">
-                        <div v-html="props.projectData.linkIcon" class="port-button__project-link"></div>
-                    </a>
-                </div>
-                <div class="port-project-template__lower-text-info-divider">
-                    <div>
-                        <h3 class="port-small-bold">About</h3>
-                        <p class="port-medium-book">{{props.projectData.about}}</p>
-                    </div>
-                    <div>
-                        <h3 class="port-small-bold">Goal</h3>
-                        <p class="port-medium-book">{{props.projectData.goal}}</p>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="port-small-bold">Process</h3>
-                    <p class="port-medium-book">{{props.projectData.process}}</p>
-                </div>
-                <button class="port-button port-button--collapse" @click="toggleAccordion(false)">
-                    <div class="port-project-template__collapse-svg-container">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10.71" height="11.016" viewBox="0 0 10.71 11.016">
-                            <path id="Path_4" data-name="Path 4" d="M6.635,8.888h8.38v1.377H6.635l3.693,3.693-.973.973L4,9.577,9.355,4.222l.973.973Z" transform="translate(14.932 -4) rotate(90)" fill="#212e45"/>
-                        </svg>
-                    </div>
-                    <p class="port-extra-small-bold">collapse</p>
-                </button>
-            </section> -->
-
     </article>
 </template>
 
@@ -137,6 +136,20 @@
     .port-project-template {
         height: 42rem;
         cursor: pointer;
+        position: relative;
+
+        &--selected {
+            cursor: default;
+            position: fixed;
+            width: 100%;
+            min-width: 115rem;
+            max-width: 120rem;
+            height: 45rem;
+            z-index: 9999;
+            margin: auto;
+            inset: 0;
+            z-index: 10000;
+        }
 
         &:nth-child(1) {
             grid-column: col / span 6;
@@ -155,19 +168,18 @@
 
         &:nth-child(4) {
             grid-column: col / span 6;
-            grid-row: row;
+            grid-row: row 3;
         }
 
         &:nth-child(5) {
             grid-column: col 3 / span 4;
-            grid-row: row 2 ;
+            grid-row: row 3 ;
         }
 
         &:nth-child(6) {
             grid-column: col / span 2;
-            grid-row: row 2;
+            grid-row: row 4;
         }
-
 
         &__main-container {
             overflow: hidden;
@@ -177,55 +189,33 @@
         }
 
         &__collapse-svg-container {
+            transition: padding 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
             svg {
                 height: 1.3rem;
                 width: auto;
+                transform: rotate(-90deg);
+                padding-bottom: 3rem;
             }
         }
 
-        &__lower-text-info-divider {
+        &__detail-text-container {
             display: flex;
-            margin: 0 -2rem;
-            padding-top: 3rem;
-            padding-bottom: 0.5rem;
+            margin: 4rem -3rem;
+            width: calc(100% - 1rem);
 
-            @include mq('tablet') {
-                padding-top: 2rem;
-                margin-left: -2rem;
-                margin-right: 0;
-                flex-direction: column;
-            }
-            
             div {
-                width: 50%;
-                margin: 0 2rem;
-
-                @include mq('tablet') {
-                    width: 100%;
-                }
+                margin: 0 3rem;
+                flex-grow: 1;
+                flex-basis: 0;
             }
         }
 
-        &__lower-container {
+        &__details-container {
+            top: -2rem;
             position: relative;
-            opacity: 0;
-            height: 0;
-            transition: height 0.35s cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s, opacity 0.25s ease-in-out;
-
-            @include mq('tablet') {
-                padding: 0 2rem;
-            }
-
-            &--accordion-is-expanded {
-                transition: height 0.45s cubic-bezier(0.075, 0.82, 0.165, 1), opacity 0.3s ease-in-out 0.1s;
-                opacity: 1;
-                height: 35rem;
-
-                @include mq('tablet') {
-                    padding-top: 2rem;
-                    height: 47rem;
-                }
-            }
+            padding-left: 3.2rem;
+            height: 22.5rem;
+            //transition: height 0.35s cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s, opacity 0.25s ease-in-out;
 
             .port-medium-book {
                 margin-top: -1rem;
@@ -259,7 +249,7 @@
                 flex-direction: column;
             }
 
-            .port-extra-small-bold, .port-medium-book, .port-small-book, .port-medium-extra-bold {
+            .port-extra-small-bold, .port-medium-book, .port-small-book, .port-medium-extra-bold, .port-small-bold {
                 color: $color-white;
             }
         }

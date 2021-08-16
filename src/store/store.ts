@@ -21,7 +21,8 @@ export default createStore({
 		filtered_project_type : [],
 		filtered_project_year : [],
 		filtered_project_association : [],
-		remove_tag_wrapper : undefined
+		remove_tag_wrapper : undefined,
+		project_has_been_selected : false
 	},
 
 	mutations: {
@@ -66,12 +67,25 @@ export default createStore({
 
 		SET_TAG_TO_REMOVE(state, payload) {
 			state.remove_tag_wrapper = payload
-		}
+		},
+
+		SET_PROJECT_SELECTED(state, payload) {
+			state.project_has_been_selected = payload
+
+			if (payload) {
+				document.querySelector('body')?.classList.add('no-scroll')
+			} else {
+				document.querySelector('body')?.classList.remove('no-scroll')
+			}
+		},
 	},
 
 	getters: {
 		removeFilterChoiceByTag: state => {
 			return state.remove_tag_wrapper
+		},
+		projectHasBeenSelected: state => {
+			return state.project_has_been_selected
 		}
 	},
 
@@ -140,6 +154,19 @@ export default createStore({
 			} else {
 				_context.commit('SET_PROJECT_DATA_IN_STORE', filteredProjectData)
 			}
+		},
+
+		toggleProjectDetailState(_context, projectId) {
+			const filteredArray = _context.state.project_data
+
+			filteredArray.forEach((project:Record<string, unknown>) => {
+				if (projectId) {
+					project.id === projectId ? project.selected = true : project.selected = false
+				} else {
+					project.selected = false
+				}
+			})	
+			_context.commit('SET_PROJECT_DATA_IN_STORE', filteredArray)
 		}
 	},
 })
