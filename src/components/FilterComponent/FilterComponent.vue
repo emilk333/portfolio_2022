@@ -72,11 +72,10 @@
     @import '../../foundation/scss/breakpoints.scss';
 
 	.port-filter {
-        max-width: 65rem;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
 
         @include mq('phone-wide') {
             position: relative;
@@ -89,6 +88,7 @@
         }
 
         &__dropdown-container {
+            margin-left: -0.5rem;
             @include mq('tablet') {
                 flex-wrap: wrap;
             }

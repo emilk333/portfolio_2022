@@ -115,7 +115,7 @@
         &__wrapper {
             position: relative;
             max-width: fit-content;
-            margin: 1rem;
+            margin: 7rem 0.5rem 0.5rem 0.5rem;
 
              &:before {
                 background-image: url("data:image/svg+xml; utf8, %3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='3.8' viewBox='0 0 8.535 4.268'%3E%3Cpath id='Path_49' data-name='Path 49' d='M8,10.268,12.268,6v8.535Z' transform='translate(-6 12.268) rotate(-90)' fill='%23212e45'/%3E%3C/svg%3E");

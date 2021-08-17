@@ -87,6 +87,10 @@
 				return store.state.project_data
 			})	
 
+			const originalProjectDataFromStore = computed(() => {
+				return store.state.original_project_data
+			})	
+
 			const activateBackdrop = computed(() => {
                 return store.getters.projectHasBeenSelected
             })
@@ -98,6 +102,7 @@
 
 			return {
 				projectDataFromStore,
+				originalProjectDataFromStore,
 				activateBackdrop,
 				closeBackdrop
 			}
@@ -107,14 +112,48 @@
 
 <template>
 	<div class="port-projects">
+
+		<section class="port-projects__heading-area">
+			<h1 class="port-large-bold">Browse projects</h1>
+			<p class="port-medium-book">A selection of various work</p>
+			<div class="port-svg-background-container port-svg-background-container--projects-left-variant">
+					<svg xmlns="http://www.w3.org/2000/svg" width="93.861" height="131.397" viewBox="0 0 93.861 131.397">
+						<g id="_26432" data-name="26432" transform="translate(-205.012 338.817)" opacity="0.029">
+							<path id="Path_19" data-name="Path 19" d="M241.7-328.483a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,241.7-328.483Z" transform="translate(-30 -10)" fill="#212e45"/>
+							<path id="Path_20" data-name="Path 20" d="M279.291-328.483a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,279.291-328.483Z" transform="translate(-30 -10)" fill="#212e45"/>
+							<path id="Path_29" data-name="Path 29" d="M241.7-290.892a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,241.7-290.892Z" transform="translate(-30 -10)" fill="#212e45"/>
+							<path id="Path_30" data-name="Path 30" d="M279.291-290.892a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,279.291-290.892Z" transform="translate(-30 -10)" fill="#212e45"/>
+							<path id="Path_39" data-name="Path 39" d="M241.7-253.3a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,241.7-253.3Z" transform="translate(-30 -10)" fill="#212e45"/>
+							<path id="Path_40" data-name="Path 40" d="M279.291-253.3a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,279.291-253.3Z" transform="translate(-30 -10)" fill="#212e45"/>
+							<path id="Path_41" data-name="Path 41" d="M316.883-253.3a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,316.883-253.3Z" transform="translate(-30 -10)" fill="#212e45"/>
+							<path id="Path_49" data-name="Path 49" d="M241.7-215.709a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,241.7-215.709Z" transform="translate(-30 -10)" fill="#212e45"/>
+							<path id="Path_50" data-name="Path 50" d="M279.291-215.709a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,279.291-215.709Z" transform="translate(-30 -10)" fill="#212e45"/>
+							<path id="Path_51" data-name="Path 51" d="M316.883-215.709a10.477,10.477,0,0,0-6.52,7.283c-1.263,6.05,4.787,12.1,10.837,10.837,4.552-.94,8.076-5.58,7.636-9.956a10.348,10.348,0,0,0-5.58-7.694A9.739,9.739,0,0,0,316.883-215.709Z" transform="translate(-30 -10)" fill="#212e45"/>
+						</g>
+					</svg>
+				</div>
+		</section>
+
 		<section class="port-projects__upper-container">
 			<FilterComponent />
+			<div class="port-projects__filter-info-container">
+				<div class="port-projects__filter-info">
+					<p class="port-extra-small-bold port-medium-book--opaque">Total:</p>
+					<span class="port-extra-small-bold">{{originalProjectDataFromStore.length}}</span>
+				</div>
+				<div class="port-projects__filter-info">
+					<p class="port-extra-small-bold port-medium-book--opaque">Shown:</p>
+					<span class="port-extra-small-bold">{{projectDataFromStore.length}}</span>
+				</div>
+			</div>
 		</section>
+
 		<section class="port-projects__lower-container">
 			<template v-for="project in projectDataFromStore" :key="project">
 				<ProjectTemplate :projectData="project"/>
 			</template>
 		</section>
+
 		<div class="port-projects__backdrop" @click="closeBackdrop" v-if="activateBackdrop"></div>
 	</div>
 </template>
@@ -125,7 +164,17 @@
 
 	.port-projects {
 		margin-top: 10rem;
-		padding-top: 3rem;
+		padding-top: 26rem;
+		max-width: 115rem;
+		margin: 0 auto;
+		
+		&__heading-area {
+			position: relative;
+
+			h1, p {
+				margin: 0.5rem 0;
+			}
+		}
 
 		&__backdrop {    
 			z-index: 9999;
@@ -143,8 +192,30 @@
 			margin-top: 15rem;
 		}
 
+		&__filter-info-container {
+			position: absolute;
+			right: 0;
+			top: 8rem;
+			display: flex;
+		}
+
+		&__filter-info {
+			display: flex;
+			align-items: center;
+			margin-left: 3rem;
+
+			p {
+				padding-right: 0.8rem;
+			}
+
+			span {
+				font-size: 1.2rem;
+			}
+		}
+
 		&__upper-container {
-			margin-bottom: 5rem;
+			margin-bottom: 4rem;
+			position: relative;
 
 			@include mq('tablet') {
 				margin-bottom: 0;
