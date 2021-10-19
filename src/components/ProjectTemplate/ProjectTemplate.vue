@@ -35,7 +35,7 @@
             }
 
             const typeButtonColor: Record<string, string> = {
-                1 : 'port-button--behance-link',
+                1 : 'port-button--zeplin-link',
                 2 : 'port-button--github-link',
             }
 
@@ -81,6 +81,7 @@
                         <div class="port-button-container">
                             <a class="port-button" :class="selectTypeButtonColor(props.projectData.typeId)" :href="props.projectData.link">
                                 <div v-html="props.projectData.linkIcon" class="port-button__project-link"></div>
+                                <p class="port-medium-medium">Zeplin</p>
                             </a>
                         </div>
                         <section class="port-project-template__detail-text-container">
@@ -237,13 +238,18 @@
         }
 
         &:nth-child(5) {
-            grid-column: col 3 / span 4;
-            grid-row: row 3 ;
+            grid-column: col / span 4;
+            grid-row: row 4;
         }
 
         &:nth-child(6) {
-            grid-column: col / span 2;
+            grid-column: col 5 / span 2;
             grid-row: row 4;
+        }
+
+        &:nth-child(7) {
+            grid-column: span 6;
+            grid-row: row 5;
         }
 
         &__main-container {
@@ -284,6 +290,11 @@
 
             .port-medium-book {
                 margin-top: -1rem;
+            }
+
+            p {
+                padding-left: 1rem;
+                margin: 0;
             }
         }
 

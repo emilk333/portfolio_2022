@@ -17,64 +17,64 @@ export default defineComponent({
 		const toolsData = ref([
 			{
 				name : "Html",
-				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
-				tooltipStrength : "Master",
+				tooltipText : "Intermediate semantic markup and accessibility understanding. Handlebars and Pug experience included.",
+				tooltipStrength : "Intermediate - advanced",
 				tooltipStrengthLevel : 1,
 				tooltipShown : false,
 				type : "tech"
 			},
 			{
 				name : "Sass",
-				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
-				tooltipStrength : "Pretty good",
-				tooltipStrengthLevel : 2,
+				tooltipText : "CSS, SCSS and SASS experience, through primarily a BEM methodology.",
+				tooltipStrength : "Intermediate - Advanced",
+				tooltipStrengthLevel : 1,
 				tooltipShown : false,
 				type : "tech"
 			},
 			{
 				name : "Javascript",
-				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
-				tooltipStrength : "Master",
-				tooltipStrengthLevel : 3,
+				tooltipText : "Queue imposter syndrome: Basic to intermediate understanding of core concepts (Syntax, closures, callbacks, the DOM etc).",
+				tooltipStrength : "Intemediate",
+				tooltipStrengthLevel : 2,
 				tooltipShown : false,
 				type : "tech"
 			},
 			{
 				name : "React",
-				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
-				tooltipStrength : "Master",
-				tooltipStrengthLevel : 1,
+				tooltipText : "Basic understanding on various React core concepts and syntax, such as JSX, Hooks, Virtual DOM etc.",
+				tooltipStrength : "Basic - Intermediate",
+				tooltipStrengthLevel : 2,
 				tooltipShown : false,
 				type : "tech"
 			},
 			{
 				name : "Vue",
-				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
-				tooltipStrength : "Master",
+				tooltipText : "Intermediate understanding of Vue cure concepts and syntax. This includes state engine architecture such as Flux patterns (Vuex for vue or Redux for React).",
+				tooltipStrength : "Intermediate",
 				tooltipStrengthLevel : 1,
 				tooltipShown : false
 			},
 			{
 				name : "AdobeXD",
-				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
-				tooltipStrength : "Master",
+				tooltipText : "Although little experience with Figma, this is my primary mock tool. Primarily used for design and prototypes.",
+				tooltipStrength : "Intermediate - Advanced",
 				tooltipStrengthLevel : 1,
 				tooltipShown : false,
 				type : "design"
 			},
 			{
 				name : "Photoshop",
-				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
-				tooltipStrength : "Master",
-				tooltipStrengthLevel : 1,
+				tooltipText : "Basic understanding of the most important features of Photoshop.",
+				tooltipStrength : "Basic",
+				tooltipStrengthLevel : 3,
 				tooltipShown : false,
 				type : "design"
 			},
 			{
 				name : "Zeplin",
-				tooltipText : "Lorem ipsum and more Lorem ipsum and more Lorem ipsum and more",
-				tooltipStrength : "Master",
-				tooltipStrengthLevel : 1,
+				tooltipText : "Primary tool for design delivery.",
+				tooltipStrength : "Basic",
+				tooltipStrengthLevel : 2,
 				tooltipShown : false,
 				type : "design"
 			}
