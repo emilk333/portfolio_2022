@@ -155,6 +155,11 @@
 
         &__popup-check-wrapper {
             padding: 0.8rem 0;
+            display: flex;
+
+            @include mq('tablet') {
+                padding: 1.8rem 0;   
+            }
 
             &>* {
                 cursor: pointer;
@@ -162,6 +167,9 @@
 
             label {
                 padding-left: 1rem;
+                width: 100%;
+                display: inline-block;
+                margin-top: -0.1rem;
             }
         }
 	}

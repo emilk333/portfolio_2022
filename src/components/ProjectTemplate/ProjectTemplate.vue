@@ -134,6 +134,7 @@
     @import '../../foundation/scss/breakpoints.scss';
 
     .port-project-template {
+        width: 100%;
         height: 42rem;
         cursor: pointer;
         position: relative;
@@ -149,6 +150,51 @@
             margin: auto;
             inset: 0;
             z-index: 10000;
+
+            .port-project-template__text-container {
+                justify-content: flex-start;
+            }
+
+            @include mq('tablet-small') {
+                height: 100%;
+                z-index: 999999;
+                border-radius: 0;
+                min-width: 100%;
+
+                .port-project-template__image-container {
+                    height: 130vh;
+                }
+
+                .port-project-template__title-container {
+                    padding-left: 1rem;
+                }
+
+                .port-project-template__image-container, .port-project-template__main-container {
+                    border-radius: 0;
+                    overflow: auto;
+                }
+
+                .port-project-template__info-container {
+                    padding-bottom: 3rem;
+
+                    &:last-child {
+                        padding-bottom: 0;
+                    }
+                }
+
+                .port-project-template__details-container {
+                    padding-left: 1rem;
+                    height: 100%;
+                }
+
+                .port-project-template__detail-text-container {
+                    flex-direction: column;
+
+                    div {
+                        width: 100%;
+                    }
+                }
+            }
         }
 
         &:nth-child(1) {
@@ -159,6 +205,25 @@
         &:nth-child(2) {
             grid-column: col / span 2;
             grid-row: row 2;
+
+            .port-project-template__info-wrapper {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .port-project-template__info-container {
+                padding-bottom: 3rem;
+
+                &:last-child {
+                    padding-bottom: 0;
+                }
+            }
+
+            .port-project-template--selected {
+                .port-project-template__info-container {
+                    padding-bottom: 0;
+                }
+            }
         }
 
         &:nth-child(3) {
@@ -256,8 +321,7 @@
 
         &__info-wrapper {
             display: flex;   
-            padding-top: 2rem;
-
+            
             @include mq('tablet') {
                 padding-top: 0;
                 margin-left: unset;

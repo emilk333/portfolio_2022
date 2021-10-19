@@ -202,6 +202,10 @@ export default defineComponent({
 			height: 120vh;
 			width: 100vw; 
 			background-color: transparent;	
+
+			@include mq('tablet-small') {
+				height: 180vh;
+			}
 		}
 	}
 
@@ -219,11 +223,11 @@ export default defineComponent({
 		&__container {
 			max-width: 1080px;
 			margin: 0 auto;
-			margin-top: 30rem;
+			padding-top: 30rem;
 			margin-bottom: 10rem;
 
 			@include mq('tablet') {
-				margin-top: 22rem;
+				padding-top: 22rem;
 			}
 		}
 

@@ -21,7 +21,7 @@
             } 
 
             onMounted(() => {
-                console.log("If you think using Vue with Vuex and TS is overkill for a static portfolio site .. you are absolutely right. I just can't help myself")
+                console.log("I just need to add Kubernetes to this project and its juuuust right")
                 
                 const areaToHover = ref((document.querySelector('.js-port-mouse-hover-effect') as HTMLElement) ?? "")
                 document.body.onmousemove = function(e) {
@@ -148,7 +148,7 @@
         align-items: center;
         position: absolute;
         top: 0;
-        z-index: 9999;
+        z-index: 99999;
 
         &__nav {
             display: flex;
@@ -232,6 +232,7 @@
                 display: none;
 
                 @include mq('tablet-wide') {
+                    margin-left: 0;
                     position: fixed;
                     top: 0!important;
                     display: block;
@@ -269,6 +270,7 @@
                 position: absolute;
                 top: 3.7rem;
                 right: 2rem;
+                overflow: hidden;
 			}
         }
 

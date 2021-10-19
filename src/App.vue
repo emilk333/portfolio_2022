@@ -3,11 +3,13 @@
 <script lang="ts">
     import { defineComponent } from 'vue';
 	import TheHeader from './components/TheHeader/TheHeader.vue'
+	import TheFooter from './components/FooterComponent/FooterComponent.vue'
 
     export default defineComponent({
         name: 'App',
 		components: {
-			TheHeader
+			TheHeader,
+			TheFooter
 		}
 	});
 </script>
@@ -19,6 +21,7 @@
 			<component :is="Component" />
 		</transition>
 	</router-view>
+	<TheFooter />
 </template>
 
 <style lang="scss">

@@ -114,7 +114,7 @@
 	<div class="port-projects">
 
 		<section class="port-projects__heading-area">
-			<h1 class="port-large-bold">Browse projects</h1>
+			<h1 class="port-large-bold">Browse portfolio</h1>
 			<p class="port-medium-book">A selection of various work</p>
 			<div class="port-svg-background-container port-svg-background-container--projects-left-variant">
 					<svg xmlns="http://www.w3.org/2000/svg" width="93.861" height="131.397" viewBox="0 0 93.861 131.397">
@@ -147,7 +147,7 @@
 				</div>
 			</div>
 		</section>
-
+	
 		<section class="port-projects__lower-container">
 			<template v-for="project in projectDataFromStore" :key="project">
 				<ProjectTemplate :projectData="project"/>
@@ -167,6 +167,10 @@
 		padding-top: 26rem;
 		max-width: 115rem;
 		margin: 0 auto;
+
+		@include mq('tablet') {
+			padding-top: 23rem;
+		}
 		
 		&__heading-area {
 			position: relative;
@@ -188,15 +192,15 @@
 			background: linear-gradient(146deg, rgba(94,88,191,0.8029586834733894) 0%, rgba(12,15,57,0.8589810924369747) 100%);
         }
 
-		@include mq('tablet') {
-			margin-top: 15rem;
-		}
-
 		&__filter-info-container {
 			position: absolute;
 			right: 0;
 			top: 8rem;
 			display: flex;
+
+			@include mq('tablet') {
+				top: -4.5rem;
+			}
 		}
 
 		&__filter-info {
@@ -218,7 +222,8 @@
 			position: relative;
 
 			@include mq('tablet') {
-				margin-bottom: 0;
+				margin-top: 2rem;
+				margin-bottom: 3rem;
 			}
 		}
 
@@ -231,6 +236,11 @@
 			grid-column-gap: 6px;
 			grid-template-columns: repeat(6, [col] auto);
 			grid-template-rows: repeat(3, [row] auto);
+
+			@include mq('tablet-small') {
+				display: flex;
+				flex-wrap: wrap;
+			}
 		}
 	}
 

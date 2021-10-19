@@ -33,7 +33,7 @@
                 return projectCategories
 			})	
 
-            const selectedFilterChoicesTags = computed(() => {
+            const selectedFilterChoicesTags = computed(():any[] => {
                 const types = store.state.filtered_project_type
                 const year = store.state.filtered_project_year
                 const association = store.state.filtered_project_association
@@ -41,10 +41,15 @@
                 return [...types, ...year, ...association]
             })
 
+            const selectedFilterContainerHeightClass = computed(() => {
+                return selectedFilterChoicesTags.value.length > 0 ? '' : 'port-filter__tag-container--collapsed'
+            })
+
             return {
                 projectTypeDataFromStore,
                 selectedFilterChoicesTags,
                 removeFilterChoice,
+                selectedFilterContainerHeightClass,
                 dropdownComponentRef
             }
 		}
@@ -58,7 +63,7 @@
                 <DropdownComponent :dropdownData="dropdownFilter"/>
             </template>
         </div>
-        <div class="port-filter__tag-container">
+        <div class="port-filter__tag-container" :class="selectedFilterContainerHeightClass">
             <template v-for="(tag, index) in selectedFilterChoicesTags" :key="index">
                 <span class="port-filter__tag port-small-medium" @click="removeFilterChoice(tag)">{{tag.value}}</span>
             </template>
@@ -89,15 +94,27 @@
 
         &__dropdown-container {
             margin-left: -0.5rem;
+            width: 100%;
+            
             @include mq('tablet') {
                 flex-wrap: wrap;
+                margin-left: 0;
             }
         }
 
         &__tag-container {
+            max-height: 500px;
+            transition: max-height 0.25s ease-in-out;
+
             @include mq('tablet') {
                 margin-top: 1rem;
                 flex-wrap: wrap;
+            }
+
+            &--collapsed {
+                max-height: 0;
+                transition: max-height 0.2s ease-in-out;
+                overflow: hidden;
             }
 
             span {

@@ -11,6 +11,9 @@
 
 html { font-size: 10px; }
 
+body {
+  background-color: $light-blue-opaque;
+}
 
 a {
   text-decoration: none;
@@ -41,6 +44,9 @@ header {
   overflow: hidden;
 }
 
+.port-main {
+  background-color: #fff;
+}
 
 
  /// NORMALIZE FROM HERE 

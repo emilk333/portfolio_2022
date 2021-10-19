@@ -37,6 +37,11 @@
         position: absolute;
         right: 20px;
 
+        @include mq('tablet-small') {
+            top: -81px;
+            right: 0;
+        }
+
         p {
             margin-top: 0.8rem;
         }
