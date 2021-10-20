@@ -34,17 +34,17 @@
                 2 : 'port-project-template__type-dot-indicator--ux-design',
             }
 
-            const typeButtonColor: Record<string, string> = {
-                1 : 'port-button--zeplin-link',
-                2 : 'port-button--github-link',
+            const typeButtonIcon: Record<string, string> = {
+                1 : 'Zeplin',
+                2 : 'Github',
             }
 
             const selectTypeDotIndicatorColor = (typeId:number):string => {
                 return typeDotIndicator[typeId]
             }
 
-            const selectTypeButtonColor = (typeId:number):string => {
-                return typeButtonColor[typeId]
+             const selectTypeButtonIcon = (typeId:number):string => {
+                return typeButtonIcon[typeId]
             }
 
             const toggleProjectDetails = (selectedState: boolean, projectId:boolean):void => {
@@ -57,8 +57,8 @@
                 projectToScrollTo,
                 seeProjectDetailsClass,
                 inspectProjectText,
+                selectTypeButtonIcon,
                 selectTypeDotIndicatorColor,
-                selectTypeButtonColor,
                 toggleProjectDetails,
             }
         }
@@ -78,11 +78,14 @@
                     </div>
 
                     <section class="port-project-template__details-container" v-if="props.projectData.selected">
-                        <div class="port-button-container">
-                            <a class="port-button" :class="selectTypeButtonColor(props.projectData.typeId)" :href="props.projectData.link">
-                                <div v-html="props.projectData.linkIcon" class="port-button__project-link"></div>
-                                <p class="port-medium-medium">Zeplin</p>
-                            </a>
+                        <div class="port-button-wrapper">
+                            <div class="port-button-container">
+                                <a class="port-button port-button--primary-link" :href="props.projectData.link" target="_blank">
+                                    <div v-html="props.projectData.linkIcon" class="port-button__project-link"></div>
+                                    <p class="port-medium-medium">{{selectTypeButtonIcon(props.projectData.typeId)}}</p>
+                                </a>
+                            </div>
+                            <a v-if="props.projectData.demoLink" class="port-button port-button--secondary-link port-medium-medium" :href="props.projectData.demoLink" target="_blank">Demo</a>
                         </div>
                         <section class="port-project-template__detail-text-container">
                             <div>
@@ -150,7 +153,7 @@
             z-index: 9999;
             margin: auto;
             inset: 0;
-            z-index: 10000;
+            z-index: 999999;
 
             .port-project-template__text-container {
                 justify-content: flex-start;
@@ -278,6 +281,10 @@
                 margin: 0 3rem;
                 flex-grow: 1;
                 flex-basis: 0;
+
+                p {
+                    padding-left: 0;
+                }
             }
         }
 
@@ -383,6 +390,7 @@
             height: 100%;
             background-position: center;
             background-repeat: no-repeat;
+            background-color: #fff;
             transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             background-size: cover;
 
@@ -397,7 +405,8 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background-image: linear-gradient(to bottom right,#002f4b, #dc4225);
+                // background-image: linear-gradient(to bottom right,#002f4b, #dc4225);
+                background-image: linear-gradient(146deg, rgba(94, 88, 191, 0.8029586835) 0%, rgba(12, 15, 57, 0.8589810924) 100%);
                 opacity: .6; 
             }
         }

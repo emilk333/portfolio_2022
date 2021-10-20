@@ -2,7 +2,7 @@
 
 
 <script lang="ts">
-    import { computed, defineComponent, onMounted, ref, watch } from 'vue';
+    import { computed, defineComponent, onMounted, ref } from 'vue';
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
 	import detectScrollDirection from '../../foundation/js/detecScrollDirection.ts'
@@ -45,9 +45,9 @@
         <div class="port-header__container">
 
             <section class="port-header__left-section">
-                <a href="/somerere" class="port-header__circle-container">
+                <a href="/" class="port-header__circle-container">
                     <div class="port-header__img-container">
-                        <img src="https://images.pexels.com/photos/3671091/pexels-photo-3671091.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="">
+                        <img src="images/profileimage.jpg" alt="Profile image">
                     </div>
                 </a>
                 <div class="port-header__profile-mini-text-container">
