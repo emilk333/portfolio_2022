@@ -85,6 +85,8 @@
         &__level-label {
             margin-bottom: 0;
             margin-top: 1.8rem;
+            display: flex;
+            flex-direction: column;
         }
 
         &__level {

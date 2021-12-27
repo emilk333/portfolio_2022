@@ -16,6 +16,7 @@
     }
 
     &--primary-link {
+        box-shadow: rgba($dark-blue, 0.2) 0px 2px 8px 0px;
         margin: 1rem 0; 
         background-color: $light-grey;
         transition: padding 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -51,8 +52,8 @@
     }
 
     &--secondary-link {
-        color: #fff;
-
+        margin-bottom: -15px;
+        
         &:hover {
             text-decoration: underline;
         }
@@ -108,4 +109,6 @@
 
 .port-button-wrapper {
     display: flex;
+    flex-direction: column;
+    color: $dark-blue;
 }

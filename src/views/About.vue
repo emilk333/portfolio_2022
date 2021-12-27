@@ -49,10 +49,11 @@ export default defineComponent({
 			},
 			{
 				name : "Vue",
-				tooltipText : "Intermediate understanding of Vue cure concepts and syntax. This includes state engine architecture such as Flux patterns (Vuex for vue or Redux for React).",
+				tooltipText : "Intermediate understanding of Vue 2/3.0 core concepts and syntax. This includes Vuex statemanagement",
 				tooltipStrength : "Intermediate",
 				tooltipStrengthLevel : 1,
-				tooltipShown : false
+				tooltipShown : false,
+				type : "tech"
 			},
 			{
 				name : "AdobeXD",

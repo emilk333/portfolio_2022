@@ -37,6 +37,7 @@
             const typeButtonIcon: Record<string, string> = {
                 1 : 'Zeplin',
                 2 : 'Github',
+                3 : 'Zeplin'
             }
 
             const selectTypeDotIndicatorColor = (typeId:number):string => {
@@ -154,9 +155,34 @@
             margin: auto;
             inset: 0;
             z-index: 999999;
+            transition: position 0.6s, top 1s, width 0.6s, height 0.6s, max-width 0.6s, max-height 0.6s;
+            transition-timing-function: ease;
+
+            .port-project-template__image-container {
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: 13rem;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: $color-white;
+                    opacity: 1; 
+                }
+            }
 
             .port-project-template__text-container {
                 justify-content: flex-start;
+
+                .port-extra-small-bold, .port-medium-book, .port-small-bold {
+                    color: $dark-blue;
+                }
+
+                .port-button--collapse {
+                    p {
+                        color: $color-white;
+                    }
+                }
             }
 
             @include mq('tablet-small') {
@@ -308,6 +334,10 @@
         &__title {
             margin-top: 2.5rem;
             margin-bottom: -0.5rem;
+
+            @include mq('phone') {
+                max-width: 60%;
+            }
         }
 
         &__title-container {
@@ -405,8 +435,8 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                // background-image: linear-gradient(to bottom right,#002f4b, #dc4225);
-                background-image: linear-gradient(146deg, rgba(94, 88, 191, 0.8029586835) 0%, rgba(12, 15, 57, 0.8589810924) 100%);
+                //background-image: linear-gradient(to bottom right,#002f4b, #dc4225);
+                background-image: linear-gradient(228deg, rgb(39 28 220 / 80%) 0%, rgb(57 12 24 / 86%) 100%);
                 opacity: .6; 
             }
         }

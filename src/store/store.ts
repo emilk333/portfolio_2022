@@ -143,11 +143,37 @@ export default createStore({
 			const projectData = deepClone(_context.state.original_project_data ?? [])
 			const mergedFilterData = deepClone([..._context.state.filtered_project_type, 
 				..._context.state.filtered_project_year, 
-				..._context.state.filtered_project_association].map((item:Record<string, unknown>) => item.value))
+				..._context.state.filtered_project_association].map((item:Record<string, unknown>) => {
+					return {
+						value : item.value,
+						category : item.category
+					}
+				}))
 
-			const filteredProjectData = projectData.filter((project:Record<string, unknown>) => {
-				return (mergedFilterData.includes(project.type)||mergedFilterData.includes(project.year)||mergedFilterData.includes(project.association))
+			console.log("SELECTED FILTERS", mergedFilterData)
+			
+			let filteredProjectData:any = []
+
+			mergedFilterData.forEach((item:any, index:any) => {
+				
+				if (filteredProjectData.length > 0) {
+					const y = filteredProjectData.filter((filteredItem:any) => {
+						return filteredItem[item.category] === mergedFilterData[index].value
+					})
+					
+					filteredProjectData = y
+				} else {
+					const x = projectData.filter((project:any) => {
+						if (project[item.category] === mergedFilterData[index].value) {
+							return project
+						}
+					})
+					filteredProjectData = [...filteredProjectData, ...x]
+				}
 			})
+
+			console.log("filteredProjectData", filteredProjectData)
+			
 
 			if (!filteredProjectData.length) {
 				_context.commit('SET_PROJECT_DATA_IN_STORE', projectData)
