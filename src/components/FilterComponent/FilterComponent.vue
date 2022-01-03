@@ -4,7 +4,7 @@
 <script lang="ts">
 	import { defineComponent, computed, ref } from 'vue'
     import { useStore } from 'vuex'
-	import DropdownComponent from '../InputElements/DropdownComponent.vue'
+    import DropdownComponent from '../InputElements/DropdownComponent.vue'
 
 	export default defineComponent({
 		name: 'ProjectsView',
@@ -30,6 +30,7 @@
                     { category : "year", data : year },
                     { category : "association", data : association},
                 ]
+
                 return projectCategories
 			})	
 

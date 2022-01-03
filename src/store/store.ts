@@ -1,8 +1,8 @@
 import { createStore } from 'vuex'
-import { toRaw } from 'vue'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import deepClone from '../foundation/js/deepClone.ts'
+import { compare } from '../foundation/js/compareValuesInObject'
 
 interface IIndexType {
 	[index: string]: string;
@@ -54,7 +54,7 @@ export default createStore({
 		},
 
 		SET_PROJECT_YEAR(state, payload) {
-			state.project_year_data = payload
+			state.project_year_data = payload.sort(compare)
 		},
 
 		SET_PROJECT_ASSOCIATION(state, payload) {
