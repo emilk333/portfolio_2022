@@ -158,7 +158,8 @@ export default defineComponent({
 				<div class="port-about__lower-container">
 					<div>
 						<h3 class="port-small-bold">Strongsuit</h3>
-						<p class="port-medium-book">Good technical understanding of web technologies combined with design knowledge, reaching from research to design processes to high fidelity mockups and more. Currently I’m working as a frontend developer for a consultancy in Copenhagen 🇩🇰</p>
+						<p class="port-medium-book">Good technical understanding of web technologies combined with design knowledge, reaching from research to design processes to high fidelity mockups and more. Currently I’m working as a frontend developer for a consultancy in Copenhagen 🇩🇰 <br><br> 
+						The code for this portfolio can be found at <a target="_blank" href="https://github.com/emilk333/portfolio_2022">https://github.com/emilk333/portfolio_2022</a></p>
 					</div>
 				</div>
 				<div class="port-about__lower-container">

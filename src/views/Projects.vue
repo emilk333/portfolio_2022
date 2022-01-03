@@ -2,7 +2,7 @@
 
 
 <script lang="ts">
-	import { defineComponent, onBeforeMount, computed, watch } from 'vue'
+	import { defineComponent, onBeforeMount, computed } from 'vue'
 	import { useStore } from 'vuex'
 	import FilterComponent from '../components/FilterComponent/FilterComponent.vue'
 	import ProjectTemplate from '../components/ProjectTemplate/ProjectTemplate.vue'
@@ -147,6 +147,10 @@
                 return store.getters.projectHasBeenSelected
             })
 
+			const noResultsMatchFilters = computed(() => {	
+				return store.state.missing_project_data_message_state ? store.state.missing_project_data_message : ''
+			})
+
 			const closeBackdrop = () => {
 				store.commit('SET_PROJECT_SELECTED', false)
 				store.dispatch('toggleProjectDetailState', null)
@@ -156,6 +160,7 @@
 				projectDataFromStore,
 				originalProjectDataFromStore,
 				activateBackdrop,
+				noResultsMatchFilters,
 				closeBackdrop
 			}
 		}
@@ -198,6 +203,8 @@
 					<span class="port-extra-small-bold">{{projectDataFromStore.length}}</span>
 				</div>
 			</div>
+
+			<p v-if="noResultsMatchFilters" class="port-projects__filter-info-error port-medium-bold">{{noResultsMatchFilters}}</p>
 		</section>
 	
 		<section class="port-projects__lower-container">
@@ -213,6 +220,7 @@
 
 <style scoped lang="scss">
 	@import '../foundation/scss/breakpoints.scss';
+	@import '../foundation/scss/typography.scss';
 
 	.port-projects {
 		margin-top: 10rem;
@@ -247,6 +255,11 @@
             background: rgb(94,88,191);
 			background: linear-gradient(146deg, rgba(94,88,191,0.8029586834733894) 0%, rgba(12,15,57,0.8589810924369747) 100%);
         }
+
+		&__filter-info-error {
+			color: $blood-orange;
+			padding-top: 4rem;
+		}
 
 		&__filter-info-container {
 			position: absolute;

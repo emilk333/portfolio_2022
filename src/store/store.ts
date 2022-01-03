@@ -25,7 +25,10 @@ export default createStore({
 		filtered_project_year: [],
 		filtered_project_association: [],
 		remove_tag_wrapper: undefined,
-		project_has_been_selected: false
+		project_has_been_selected: false,
+		missing_project_data_message_state: false,
+		missing_project_data_message: "Sorry, but nothing matches these filters. Please try again!",
+
 	},
 
 	mutations: {
@@ -81,6 +84,10 @@ export default createStore({
 				document.querySelector('body')?.classList.remove('no-scroll')
 			}
 		},
+
+		SET_MISSING_PROJECT_DATA_MESSAGE(state, payload) {
+			state.missing_project_data_message_state = payload
+		} 
 	},
 
 	getters: {
@@ -152,7 +159,8 @@ export default createStore({
 					category: item.category
 				}
 			}))
-			const tempArr:any = []
+			const sortResults:any = []
+			let errorState = false
 
 			projectData.forEach((item:any) => {
 				let currentProjectContainAnySelectedValue = true
@@ -167,11 +175,13 @@ export default createStore({
 				})
 
 				if (currentProjectContainAnySelectedValue) {
-					tempArr.push(item)
+					sortResults.push(item)
 				}
 			})
 
-			_context.commit('SET_PROJECT_DATA_IN_STORE', tempArr)
+			if (!sortResults.length) { errorState = true }
+			_context.commit('SET_MISSING_PROJECT_DATA_MESSAGE', errorState)
+			_context.commit('SET_PROJECT_DATA_IN_STORE', sortResults)
 		},
 
 		toggleProjectDetailState(_context, projectId) {
