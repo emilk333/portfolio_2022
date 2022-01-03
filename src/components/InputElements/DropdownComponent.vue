@@ -144,8 +144,11 @@
             background-color: $color-white;
             height: fit-content;
             top: 4rem;
-            opacity: 0;
-            z-index: -1;
+            position: absolute;
+            
+                opacity: 0;
+                z-index: -1;
+            
 
             &--active {
                 opacity: 1;
@@ -156,6 +159,7 @@
         &__popup-check-wrapper {
             padding: 0.8rem 0;
             display: flex;
+            display: none;
 
             @include mq('tablet') {
                 padding: 1.8rem 0;   
@@ -173,5 +177,11 @@
             }
         }
 	}
+
+    .port-dropdown__popup--active {
+        .port-dropdown__popup-check-wrapper {
+            display: flex;
+        }
+    }
 
 </style>

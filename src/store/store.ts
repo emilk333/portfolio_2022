@@ -1,32 +1,35 @@
 import { createStore } from 'vuex'
+import { toRaw } from 'vue'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import deepClone from '../foundation/js/deepClone.ts'
 
 interface IIndexType {
-    [index: string]: string;
+	[index: string]: string;
 }
+
+
 
 export default createStore({
 
 	state: {
-		tools_data : undefined ?? [],
-		tooltip_is_active : false,
-		project_data : [],
-		original_project_data : [],
-		project_type_data : undefined,
-		project_year_data : undefined,
-		project_association_data : undefined,
+		tools_data: undefined ?? [],
+		tooltip_is_active: false,
+		project_data: [],
+		original_project_data: [],
+		project_type_data: undefined,
+		project_year_data: undefined,
+		project_association_data: undefined,
 
-		filtered_project_type : [],
-		filtered_project_year : [],
-		filtered_project_association : [],
-		remove_tag_wrapper : undefined,
-		project_has_been_selected : false
+		filtered_project_type: [],
+		filtered_project_year: [],
+		filtered_project_association: [],
+		remove_tag_wrapper: undefined,
+		project_has_been_selected: false
 	},
 
 	mutations: {
-	
+
 		SET_TOOLS_DATA_IN_STORE(state, payload) {
 			state.tools_data = payload
 		},
@@ -90,11 +93,11 @@ export default createStore({
 	},
 
 	actions: {
-		activateTooltip(_context, identifierKey:string) {
+		activateTooltip(_context, identifierKey: string) {
 			_context.commit("SET_TOOLTIP_ACTIVE_STATE", true)
 
 			if (_context.state.tools_data !== undefined) {
-				_context.state.tools_data.filter((tool:any) => {	
+				_context.state.tools_data.filter((tool: any) => {
 					tool.tooltipShown = false
 					if (tool.name === identifierKey) {
 						tool.tooltipShown = true
@@ -107,7 +110,7 @@ export default createStore({
 			_context.commit("SET_TOOLTIP_ACTIVE_STATE", false)
 
 			if (_context.state.tools_data !== undefined) {
-				_context.state.tools_data.forEach((tool:any) => tool.tooltipShown = false )
+				_context.state.tools_data.forEach((tool: any) => tool.tooltipShown = false)
 			}
 		},
 
@@ -118,80 +121,69 @@ export default createStore({
 		setProjectDataInStore(_context, payload) {
 			_context.commit('SET_PROJECT_DATA_IN_STORE', payload)
 			_context.commit('SET_ORIGINAL_PROJECT_DATA_IN_STORE', payload)
-			_context.dispatch('createDropdownFiltersByType', {payload, category : 'type', mutation : 'SET_PROJECT_TYPES'})
-			_context.dispatch('createDropdownFiltersByType', {payload, category : 'year', mutation : 'SET_PROJECT_YEAR'})
-			_context.dispatch('createDropdownFiltersByType', {payload, category : 'association', mutation : 'SET_PROJECT_ASSOCIATION'})
+			_context.dispatch('createDropdownFiltersByType', { payload, category: 'type', mutation: 'SET_PROJECT_TYPES' })
+			_context.dispatch('createDropdownFiltersByType', { payload, category: 'year', mutation: 'SET_PROJECT_YEAR' })
+			_context.dispatch('createDropdownFiltersByType', { payload, category: 'association', mutation: 'SET_PROJECT_ASSOCIATION' })
 		},
 
 		createDropdownFiltersByType(_context, { payload, category, mutation }) {
 			const tempProjectArray = deepClone(payload)
-			const uniqueProjectTypes = [...new Set(tempProjectArray.map((item:any) => item[category]))]
-			
+			const uniqueProjectTypes = [...new Set(tempProjectArray.map((item: any) => item[category]))]
+
 			const projectTypesWithSelected = uniqueProjectTypes.map(item => {
 				return {
-					value : item,
-					checked : true,
-					category : category
+					value: item,
+					checked: true,
+					category: category
 				}
 			})
 			_context.commit(mutation, projectTypesWithSelected)
 		},
 
-		filterDropdownValue(_context, filteredValue) {	
-			_context.commit('SET_FILTERED_DATA', filteredValue) 
-			
+		filterDropdownValue(_context, filteredValue) {
+			_context.commit('SET_FILTERED_DATA', filteredValue)
+
 			const projectData = deepClone(_context.state.original_project_data ?? [])
-			const mergedFilterData = deepClone([..._context.state.filtered_project_type, 
-				..._context.state.filtered_project_year, 
-				..._context.state.filtered_project_association].map((item:Record<string, unknown>) => {
-					return {
-						value : item.value,
-						category : item.category
-					}
-				}))
+			const mergedFilterData = deepClone([..._context.state.filtered_project_type,
+			..._context.state.filtered_project_year,
+			..._context.state.filtered_project_association].map((item: Record<string, unknown>) => {
+				return {
+					value: item.value,
+					category: item.category
+				}
+			}))
+			const tempArr:any = []
 
-			console.log("SELECTED FILTERS", mergedFilterData)
-			
-			let filteredProjectData:any = []
-
-			mergedFilterData.forEach((item:any, index:any) => {
+			projectData.forEach((item:any) => {
+				let currentProjectContainAnySelectedValue = true
 				
-				if (filteredProjectData.length > 0) {
-					const y = filteredProjectData.filter((filteredItem:any) => {
-						return filteredItem[item.category] === mergedFilterData[index].value
-					})
-					
-					filteredProjectData = y
-				} else {
-					const x = projectData.filter((project:any) => {
-						if (project[item.category] === mergedFilterData[index].value) {
-							return project
-						}
-					})
-					filteredProjectData = [...filteredProjectData, ...x]
+				const categories = mergedFilterData.map((item:any) => item.category)
+				const values = mergedFilterData.map((item:any) => item.value)
+
+				categories.forEach((category:any) => {
+					if (!values.includes(item[category])) {
+						currentProjectContainAnySelectedValue = false
+					}
+				})
+
+				if (currentProjectContainAnySelectedValue) {
+					tempArr.push(item)
 				}
 			})
 
-			console.log("filteredProjectData", filteredProjectData)
-			
-
-			if (!filteredProjectData.length) {
-				_context.commit('SET_PROJECT_DATA_IN_STORE', projectData)
-			} else {
-				_context.commit('SET_PROJECT_DATA_IN_STORE', filteredProjectData)
-			}
+			_context.commit('SET_PROJECT_DATA_IN_STORE', tempArr)
 		},
 
 		toggleProjectDetailState(_context, projectId) {
 			const filteredArray = _context.state.project_data
 
-			filteredArray.forEach((project:Record<string, unknown>) => {
+			filteredArray.forEach((project: Record<string, unknown>) => {
 				if (projectId) {
 					project.id === projectId ? project.selected = true : project.selected = false
 				} else {
 					project.selected = false
 				}
-			})	
+			})
 			_context.commit('SET_PROJECT_DATA_IN_STORE', filteredArray)
 		}
 	},

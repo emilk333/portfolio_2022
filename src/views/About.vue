@@ -225,7 +225,7 @@ export default defineComponent({
 			max-width: 1080px;
 			margin: 0 auto;
 			padding-top: 30rem;
-			margin-bottom: 10rem;
+			margin-bottom: 15rem;
 
 			@include mq('tablet') {
 				padding-top: 22rem;
