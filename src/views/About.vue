@@ -33,15 +33,23 @@ export default defineComponent({
 			},
 			{
 				name : "Javascript",
-				tooltipText : "Queue imposter syndrome: Basic to intermediate understanding of core concepts (Syntax, closures, callbacks, the DOM etc).",
+				tooltipText : "Queue imposter syndrome: Intermediate understanding of core concepts (Syntax, closures, callbacks, DOM manipulation, ES6+, data structures etc).",
 				tooltipStrength : "Intemediate",
-				tooltipStrengthLevel : 2,
+				tooltipStrengthLevel : 1,
 				tooltipShown : false,
 				type : "tech"
 			},
 			{
 				name : "React",
-				tooltipText : "Basic understanding on various React core concepts and syntax, such as JSX, Hooks, Virtual DOM etc.",
+				tooltipText : "Basic to intermediate understanding on various React core concepts and syntax, such as JSX, Hooks, design patterns, context api, Virtual DOM etc.",
+				tooltipStrength : "Intermediate",
+				tooltipStrengthLevel : 1,
+				tooltipShown : false,
+				type : "tech"
+			},
+			{
+				name : "Typescript",
+				tooltipText : "Basic understanding of core typescript concepts, build-in types and usage",
 				tooltipStrength : "Basic - Intermediate",
 				tooltipStrengthLevel : 2,
 				tooltipShown : false,
@@ -158,7 +166,7 @@ export default defineComponent({
 				<div class="port-about__lower-container">
 					<div>
 						<h3 class="port-small-bold">Strongsuit</h3>
-						<p class="port-medium-book">Good technical understanding of web technologies combined with design knowledge, reaching from research to design processes to high fidelity mockups and more. Currently I’m working as a frontend developer for a consultancy in Copenhagen 🇩🇰 <br><br> 
+						<p class="port-medium-book">Good technical understanding of web technologies combined with design knowledge, reaching from research to design processes to high fidelity mockups and more. Currently I’m working as a frontend developer for a consultancy in Copenhagen<br><br> 
 						The code for this portfolio can be found at <a target="_blank" href="https://github.com/emilk333/portfolio_2022">https://github.com/emilk333/portfolio_2022</a></p>
 					</div>
 				</div>

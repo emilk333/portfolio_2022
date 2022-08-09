@@ -16,18 +16,7 @@
                 return !scrollDirection.value ? '' : 'port-header__middle-section--fixed'         
             })
 
-            const animateCursorArea = (e:MouseEvent, areaToHover:HTMLElement) => {
-                areaToHover.style.setProperty('background-position',(e.clientX - 27)+'px '+(e.clientY + 10)+'px')
-            } 
-
             onMounted(() => {
-                console.log("I just need to add Kubernetes to this project and its juuuust right")
-                
-                const areaToHover = ref((document.querySelector('.js-port-mouse-hover-effect') as HTMLElement) ?? "")
-                document.body.onmousemove = function(e) {
-                    animateCursorArea(e, areaToHover.value)
-                }
-
                 document.addEventListener("scroll", function() {
 					scrollDirection.value = detectScrollDirection.checkScroll()
 				}, false);
@@ -80,7 +69,7 @@
             </router-link>
 
             <section class="port-header__middle-section" :class="fixedHeaderDuringScroll">
-                <ul class="port-header__nav js-port-mouse-hover-effect">
+                <ul class="port-header__nav">
                     <li class="port-header__nav-item port-nav-link">
                         <router-link to="/" exact>
                             Work
@@ -156,32 +145,8 @@
             display: flex;
             background-size:0 0; 
             align-items: center;
-            cursor: none;
             transform: translateY(-40px);
             transition: transform 0.25s ease-in-out;
-
-            a {
-                cursor: none;
-            }
-
-            &:before {
-                opacity: 0.6;
-                z-index: 8888;
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background:
-                    radial-gradient(farthest-side, 
-                    $base-light-grey-dots calc(100% - 1px),
-                    transparent 100%) 
-                    fixed /* Fixed to the screen*/ 
-                    no-repeat; 
-                background-size: 60px 60px;
-                background-position: inherit;
-            }
         }
 
         &__nav-item {

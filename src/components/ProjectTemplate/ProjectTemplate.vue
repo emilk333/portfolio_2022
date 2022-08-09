@@ -86,7 +86,7 @@
                                     <p class="port-medium-medium">{{selectTypeButtonIcon(props.projectData.typeId)}}</p>
                                 </a>
                             </div>
-                            <a v-if="props.projectData.demoLink" class="port-button port-button--secondary-link port-medium-medium" :href="props.projectData.demoLink" target="_blank">Demo</a>
+                            <a v-if="props.projectData.demoLink" class="port-button port-button--secondary-link port-medium-medium" :href="props.projectData.demoLink" target="_blank">Demo/Showcase</a>
                         </div>
                         <section class="port-project-template__detail-text-container">
                             <div>

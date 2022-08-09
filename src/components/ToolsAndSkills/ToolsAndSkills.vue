@@ -35,6 +35,7 @@
 
             const svgDictionary: Record<string, string> = {
                 Html : 'images/html-svg.svg',
+                Typescript : 'images/ts-svg.svg',
                 Sass : 'images/sass-svg.svg',
                 Javascript : 'images/js-svg.svg',
                 React : 'images/react-svg.svg',
